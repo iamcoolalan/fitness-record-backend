@@ -2,7 +2,7 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up (queryInterface, Sequelize) {
-    await queryInterface.createTable('Training_Types', {
+    await queryInterface.createTable('Workout_Categories', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -10,6 +10,21 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       name: {
+        allowNull: false,
+        type: Sequelize.STRING
+      },
+      path: {
+        type: Sequelize.STRING
+      },
+      is_addable: {
+        defaultValue: false,
+        type: Sequelize.BOOLEAN
+      },
+      description: {
+        allowNull: false,
+        type: Sequelize.TEXT
+      },
+      image: {
         allowNull: false,
         type: Sequelize.STRING
       },
@@ -24,6 +39,6 @@ module.exports = {
     })
   },
   async down (queryInterface, Sequelize) {
-    await queryInterface.dropTable('Training_Types')
+    await queryInterface.dropTable('Workout_Categories')
   }
 }

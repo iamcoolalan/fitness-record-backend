@@ -13,7 +13,7 @@ module.exports = {
         allowNull: false,
         type: Sequelize.INTEGER
       },
-      workout_movement_id: {
+      workout_category_id: {
         allowNull: false,
         type: Sequelize.INTEGER
       },
@@ -24,6 +24,10 @@ module.exports = {
       repetitions: {
         allowNull: false,
         type: Sequelize.INTEGER
+      },
+      weight: {
+        allowNull: false,
+        type: Sequelize.FLOAT
       },
       is_done: {
         defaultValue: false,

@@ -13,16 +13,12 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       MealRecord.belongsTo(models.User, { foreignKey: 'userId' })
 
-      MealRecord.belongsToMany(models.Food, {
-        through: models.MealDetail,
-        foreignKey: 'mealRecordId',
-        as: 'MealRecords'
-      })
+      MealRecord.hasMany(models.MealDetail, { foreignKey: 'mealRecordId' })
     }
   }
   MealRecord.init({
     userId: DataTypes.INTEGER,
-    type: DataTypes.ENUM('breakfast', 'lunch', 'dinner', 'snack', 'extra')
+    type: DataTypes.ENUM('breakfast', 'lunch', 'dinner', 'extra', 'water')
   }, {
     sequelize,
     modelName: 'MealRecord',

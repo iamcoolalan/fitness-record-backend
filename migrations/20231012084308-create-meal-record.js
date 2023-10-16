@@ -14,7 +14,7 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       type: {
-        type: Sequelize.ENUM('breakfast', 'lunch', 'dinner', 'snack', 'extra')
+        type: Sequelize.ENUM('breakfast', 'lunch', 'dinner', 'extra', 'water')
       },
       created_at: {
         allowNull: false,

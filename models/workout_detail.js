@@ -11,16 +11,17 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate (models) {
       // define association here
-      WorkoutDetail.belongsTo(models.WorkoutMovement, { foreignKey: 'workoutMovementId' })
+      WorkoutDetail.belongsTo(models.WorkoutCategory, { foreignKey: 'WorkoutCategoryId' })
 
       WorkoutDetail.belongsTo(models.WorkoutRecord, { foreignKey: 'workoutRecordId' })
     }
   }
   WorkoutDetail.init({
     workoutRecordId: DataTypes.INTEGER,
-    workoutMovementId: DataTypes.INTEGER,
+    workoutCategoryId: DataTypes.INTEGER,
     set: DataTypes.INTEGER,
     repetitions: DataTypes.INTEGER,
+    weight: DataTypes.FLOAT,
     isDone: DataTypes.BOOLEAN
   }, {
     sequelize,

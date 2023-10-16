@@ -13,11 +13,7 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       Food.belongsTo(models.FoodCategory, { foreignKey: 'foodCategoryId' })
 
-      Food.belongsToMany(models.MealRecord, {
-        through: models.MealDetail,
-        foreignKey: 'foodId',
-        as: 'Food'
-      })
+      Food.hasMany(models.MealDetail, { foreignKey: 'foodId' })
     }
   }
   Food.init({
@@ -26,6 +22,7 @@ module.exports = (sequelize, DataTypes) => {
     protein: DataTypes.FLOAT,
     fat: DataTypes.FLOAT,
     carbohydrates: DataTypes.FLOAT,
+    defaultServingSize: DataTypes.FLOAT,
     calories: DataTypes.FLOAT
   }, {
     sequelize,

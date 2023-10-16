@@ -3,7 +3,7 @@ const {
   Model
 } = require('sequelize')
 module.exports = (sequelize, DataTypes) => {
-  class WorkoutMovement extends Model {
+  class WorkoutCategory extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -11,19 +11,20 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate (models) {
       // define association here
-      WorkoutMovement.belongsTo(models.TrainingType, { foreignKey: 'trainingTypeId' })
-
-      WorkoutMovement.hasMany(models.WorkoutDetail, { foreignKey: 'workoutMovementId' })
+      WorkoutCategory.hasMany(models.WorkoutDetail, { foreignKey: 'WorkoutCategoryId' })
     }
   }
-  WorkoutMovement.init({
-    trainingTypeId: DataTypes.INTEGER,
-    name: DataTypes.STRING
+  WorkoutCategory.init({
+    name: DataTypes.STRING,
+    path: DataTypes.STRING,
+    isAddable: DataTypes.BOOLEAN,
+    description: DataTypes.TEXT,
+    image: DataTypes.STRING
   }, {
     sequelize,
-    modelName: 'WorkoutMovement',
-    tableName: 'WorkoutMovements',
+    modelName: 'WorkoutCategory',
+    tableName: 'WorkoutCategories',
     underscored: true
   })
-  return WorkoutMovement
+  return WorkoutCategory
 }

@@ -17,6 +17,14 @@ module.exports = {
         allowNull: false,
         type: Sequelize.INTEGER
       },
+      serving_size: {
+        allowNull: false,
+        type: Sequelize.INTEGER
+      },
+      number_of_servings: {
+        allowNull: false,
+        type: Sequelize.INTEGER
+      },
       created_at: {
         allowNull: false,
         type: Sequelize.DATE

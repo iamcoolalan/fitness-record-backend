@@ -26,8 +26,10 @@ module.exports = {
       carbohydrates: {
         type: Sequelize.FLOAT
       },
+      default_serving_size: {
+        type: Sequelize.FLOAT
+      },
       calories: {
-        allowNull: false,
         type: Sequelize.FLOAT
       },
       created_at: {

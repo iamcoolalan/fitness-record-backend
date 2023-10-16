@@ -22,12 +22,12 @@ module.exports = (sequelize, DataTypes) => {
     password: DataTypes.STRING,
     birthday: DataTypes.DATE,
     gender: DataTypes.ENUM('male', 'female'),
-    activity_factor: DataTypes.ENUM('sedentary', 'lightly_active', 'moderately_active', 'very_active', 'extra_active'),
+    activityFactor: DataTypes.ENUM('sedentary', 'lightly_active', 'moderately_active', 'very_active', 'extra_active'),
     height: DataTypes.FLOAT,
     weight: DataTypes.FLOAT,
-    skeletal_muscle: DataTypes.FLOAT,
-    body_fat: DataTypes.FLOAT,
-    visceral_fat_level: DataTypes.INTEGER
+    skeletalMuscle: DataTypes.FLOAT,
+    bodyFat: DataTypes.FLOAT,
+    visceralFatLevel: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'User',
