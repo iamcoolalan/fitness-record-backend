@@ -48,7 +48,7 @@ module.exports = {
         return {
           workout_record_id: record.id,
           workout_category_id: getRandomCategoryAndRemoveIt(copyWorkoutCategories).id,
-          set: DEFAULT_SET,
+          total_sets: DEFAULT_SET,
           repetitions: DEFAULT_REPETITIONS,
           weight: randomWeight(20, 80, 2),
           created_at: record.created_at,

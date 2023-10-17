@@ -19,7 +19,7 @@ module.exports = (sequelize, DataTypes) => {
   WorkoutDetail.init({
     workoutRecordId: DataTypes.INTEGER,
     workoutCategoryId: DataTypes.INTEGER,
-    set: DataTypes.INTEGER,
+    totalSets: DataTypes.INTEGER,
     repetitions: DataTypes.INTEGER,
     weight: DataTypes.FLOAT,
     isDone: DataTypes.BOOLEAN

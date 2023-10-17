@@ -17,7 +17,7 @@ module.exports = {
         allowNull: false,
         type: Sequelize.INTEGER
       },
-      set: {
+      total_sets: {
         allowNull: false,
         type: Sequelize.INTEGER
       },
