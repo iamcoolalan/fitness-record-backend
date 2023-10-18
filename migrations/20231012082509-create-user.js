@@ -22,23 +22,18 @@ module.exports = {
         type: Sequelize.STRING
       },
       birthday: {
-        allowNull: false,
         type: Sequelize.DATE
       },
       gender: {
-        allowNull: false,
         type: Sequelize.ENUM('male', 'female')
       },
       activity_factor: {
-        allowNull: false,
         type: Sequelize.ENUM('sedentary', 'lightly_active', 'moderately_active', 'very_active', 'extra_active')
       },
       height: {
-        allowNull: false,
         type: Sequelize.FLOAT
       },
       weight: {
-        allowNull: false,
         type: Sequelize.FLOAT
       },
       skeletal_muscle: {

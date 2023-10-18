@@ -9,6 +9,7 @@ const methodOverride = require('method-override')
 const session = require('express-session')
 
 const routes = require('./routes/index.js')
+const passport = require('./config/passport.js')
 
 const app = express()
 const port = process.env.PORT || 3000
@@ -21,7 +22,10 @@ app.use(session({
   resave: false,
   saveUninitialized: false
 }))
-app.use(routes)
+app.use(passport.initialize())
+app.use(passport.session())
+app.use(express.json())
+app.use('/api', routes)
 
 app.listen(port, () => {
   console.log(`App is running on http://localhost:${port}`)
