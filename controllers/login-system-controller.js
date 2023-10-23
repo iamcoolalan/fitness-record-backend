@@ -5,8 +5,7 @@ const userServices = require('../services/user-services')
 const loginSystemController = {
   login: (req, res, next) => {
     try {
-      const user = req.user
-      delete user.password
+      const user = { id: req.user.id }
 
       const key = process.env.JWT_SECRET
       const token = jwt.sign(user, key, { expiresIn: '30d' })

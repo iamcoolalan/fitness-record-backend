@@ -24,7 +24,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'MealDetail',
-    tableName: 'MealDetails',
+    tableName: 'Meal_Details',
     underscored: true
   })
   return MealDetail

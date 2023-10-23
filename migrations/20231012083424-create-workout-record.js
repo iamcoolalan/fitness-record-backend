@@ -13,8 +13,21 @@ module.exports = {
         allowNull: false,
         type: Sequelize.INTEGER
       },
+      name: {
+        defaultValue: 'New Record',
+        type: Sequelize.STRING
+      },
+      is_done: {
+        defaultValue: false,
+        type: Sequelize.BOOLEAN
+      },
       workout_time: {
+        defaultValue: 0,
         type: Sequelize.INTEGER
+      },
+      date: {
+        allowNull: false,
+        type: Sequelize.DATEONLY
       },
       created_at: {
         allowNull: false,

@@ -21,12 +21,11 @@ module.exports = (sequelize, DataTypes) => {
     workoutCategoryId: DataTypes.INTEGER,
     totalSets: DataTypes.INTEGER,
     repetitions: DataTypes.INTEGER,
-    weight: DataTypes.FLOAT,
-    isDone: DataTypes.BOOLEAN
+    weight: DataTypes.FLOAT
   }, {
     sequelize,
     modelName: 'WorkoutDetail',
-    tableName: 'WorkoutDetails',
+    tableName: 'Workout_Details',
     underscored: true
   })
   return WorkoutDetail

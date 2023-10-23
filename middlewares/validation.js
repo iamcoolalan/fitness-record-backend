@@ -2,6 +2,10 @@ function isInputEmpty (input) {
   return input.trim().length === 0
 }
 
+function isInvalidLength (input, maxLength) {
+  return input.length > maxLength
+}
+
 const loginValidation = (req, res, next) => {
   const { email, password } = req.body
 
@@ -23,6 +27,8 @@ const loginValidation = (req, res, next) => {
 }
 
 const signupValidation = (req, res, next) => {
+  const MAX_NAME_LENGTH = 50
+
   const {
     name,
     email,
@@ -37,9 +43,9 @@ const signupValidation = (req, res, next) => {
     errors.push({
       message: '名稱不得空白'
     })
-  } else if (name.length > 50) {
+  } else if (isInvalidLength(name, MAX_NAME_LENGTH)) {
     errors.push({
-      message: '暱稱不得超過50字'
+      message: `暱稱不得超過${MAX_NAME_LENGTH}字`
     })
   }
 
@@ -79,7 +85,57 @@ const signupValidation = (req, res, next) => {
   next()
 }
 
+const createRecordValidation = (req, res, next) => {
+  const MAX_NAME_LENGTH = 30
+
+  const { name } = req.body
+  let errorMessage
+
+  if (isInputEmpty(name)) {
+    errorMessage = '名稱不得空白'
+  } else if (isInvalidLength(name, MAX_NAME_LENGTH)) {
+    errorMessage = `名稱不得超過${MAX_NAME_LENGTH}字`
+  }
+
+  if (errorMessage) {
+    return res.json({
+      status: 'error',
+      message: errorMessage
+    })
+  }
+
+  next()
+}
+
+const editRecordValidation = (req, res, next) => {
+  const MAX_NAME_LENGTH = 30
+
+  const { name, date } = req.body
+  const errors = []
+
+  if (isInputEmpty(name)) {
+    errors.push({ message: '名稱不得空白' })
+  } else if (isInvalidLength(name, MAX_NAME_LENGTH)) {
+    errors.push({ message: `名稱不得超過${MAX_NAME_LENGTH}字` })
+  }
+
+  if (isInputEmpty(date)) {
+    errors.push({ message: '日期不得空白' })
+  }
+
+  if (errors.length > 0) {
+    return res.json({
+      status: 'error',
+      message: errors
+    })
+  }
+
+  next()
+}
+
 module.exports = {
   loginValidation,
-  signupValidation
+  signupValidation,
+  createRecordValidation,
+  editRecordValidation
 }

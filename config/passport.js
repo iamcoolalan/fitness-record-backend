@@ -21,6 +21,7 @@ async (email, password, done) => {
   try {
     const user = await User.findOne({
       where: { email },
+      attributes: ['id', 'password'],
       raw: true,
       nest: true
     })

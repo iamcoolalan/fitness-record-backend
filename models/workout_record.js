@@ -18,11 +18,14 @@ module.exports = (sequelize, DataTypes) => {
   }
   WorkoutRecord.init({
     userId: DataTypes.INTEGER,
-    workoutTime: DataTypes.INTEGER
+    name: DataTypes.STRING,
+    isDone: DataTypes.BOOLEAN,
+    workoutTime: DataTypes.INTEGER,
+    date: DataTypes.DATEONLY
   }, {
     sequelize,
     modelName: 'WorkoutRecord',
-    tableName: 'WorkoutRecords',
+    tableName: 'Workout_Records',
     underscored: true
   })
   return WorkoutRecord

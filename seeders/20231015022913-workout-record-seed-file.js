@@ -37,6 +37,7 @@ module.exports = {
           return {
             user_id: user.id,
             workout_time: randomWorkoutTime(120, 30, 15),
+            date: recordDay,
             created_at: recordDay,
             updated_at: recordDay
           }
