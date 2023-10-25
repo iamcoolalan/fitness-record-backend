@@ -2,37 +2,26 @@ const { Op } = require('sequelize')
 const { sequelize, WorkoutRecord, WorkoutDetail } = require('../models')
 
 const workoutRecordServices = {
-  getRecordsByDateOrMonth: async (userId, year, month, day = null) => {
+  getRecordsByRange: async (userId, endDate, startDate = endDate) => {
     try {
-      const yearToQuery = year
-      const monthToQuery = month
-      const dayToQuery = day
+      const endDateToQuery = new Date(endDate)
+      const startDateToQuery = new Date(startDate)
 
-      let start
-      let end
-
-      if (dayToQuery) {
-        start = new Date(yearToQuery, monthToQuery - 1, dayToQuery)
-        end = new Date(yearToQuery, monthToQuery - 1, dayToQuery + 1)
-      } else {
-        start = new Date(yearToQuery, monthToQuery - 1)
-        end = new Date(yearToQuery, monthToQuery)
-      }
-
-      const monthRecords = WorkoutRecord.findAndCountAll({
+      const records = WorkoutRecord.findAndCountAll({
         where: {
           userId,
           date: {
-            [Op.gte]: start,
-            [Op.lt]: end
+            [Op.gte]: startDateToQuery,
+            [Op.lte]: endDateToQuery
           }
         },
         order: [['date', 'ASC']],
         raw: true
       })
 
-      return monthRecords
+      return records
     } catch (error) {
+      console.log(error)
       throw new Error('Failed to find records')
     }
   },

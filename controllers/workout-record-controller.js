@@ -2,19 +2,19 @@ const workoutRecordServices = require('../services/workout-record-services')
 
 const workoutRecordController = {
   getRecords: async (req, res, next) => {
-    const year = Number(req.query.year)
-    const month = Number(req.query.month)
-    const day = req.query.day ? Number(req.query.day) : null
     const userId = req.user.id
+    const endDate = req.query.endDate
+    const startDate = req.query.startDate ? req.query.startDate : undefined
 
     try {
-      const records = await workoutRecordServices.getRecordsByDateOrMonth(userId, year, month, day)
+      const records = await workoutRecordServices.getRecordsByRange(userId, endDate, startDate)
 
       return res.json({
         status: 'success',
         data: records
       })
     } catch (error) {
+      console.log(error)
       next(error)
     }
   },
