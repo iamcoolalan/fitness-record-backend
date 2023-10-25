@@ -14,6 +14,8 @@ module.exports = (sequelize, DataTypes) => {
       User.hasMany(models.MealRecord, { foreignKey: 'userId' })
 
       User.hasMany(models.WorkoutRecord, { foreignKey: 'userId' })
+
+      User.hasMany(models.BodydataRecord, { foreignKey: 'userId' })
     }
   }
   User.init({
@@ -23,11 +25,11 @@ module.exports = (sequelize, DataTypes) => {
     birthday: DataTypes.DATE,
     gender: DataTypes.ENUM('male', 'female'),
     activityFactor: DataTypes.ENUM('sedentary', 'lightly_active', 'moderately_active', 'very_active', 'extra_active'),
-    height: DataTypes.FLOAT,
-    weight: DataTypes.FLOAT,
-    skeletalMuscle: DataTypes.FLOAT,
-    bodyFat: DataTypes.FLOAT,
-    visceralFatLevel: DataTypes.INTEGER
+    targetHeight: DataTypes.FLOAT,
+    targetWeight: DataTypes.FLOAT,
+    targetSkeletalMuscle: DataTypes.FLOAT,
+    targetBodyFat: DataTypes.FLOAT,
+    targetVisceralFatLevel: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'User',

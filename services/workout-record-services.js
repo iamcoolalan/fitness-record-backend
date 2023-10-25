@@ -85,7 +85,6 @@ const workoutRecordServices = {
         throw new Error('Can not find this record')
       }
     } catch (error) {
-      console.log(error)
       throw new Error('Failed to update record')
     }
   },

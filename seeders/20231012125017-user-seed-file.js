@@ -46,11 +46,11 @@ module.exports = {
             birthday: faker.date.birthdate({ min: 18, max: 65, mode: 'age' }),
             gender: randomGender,
             activity_factor: ACTIVITY_FACTOR[getRandomInt(0, ACTIVITY_FACTOR.length - 1)],
-            height: randomHeight,
-            weight: randomWeight,
-            skeletal_muscle: randomSkeletalMuscle,
-            body_fat: randomBodyFat,
-            visceral_fat_level: randomVisceralFatLevel,
+            target_height: randomHeight,
+            target_weight: randomWeight,
+            target_skeletal_muscle: randomSkeletalMuscle,
+            target_body_fat: randomBodyFat,
+            target_visceral_fat_level: randomVisceralFatLevel,
             created_at: new Date(),
             updated_at: new Date()
           }

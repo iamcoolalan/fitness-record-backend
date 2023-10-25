@@ -26,7 +26,7 @@ const loginValidation = (req, res, next) => {
   next()
 }
 
-const signupValidation = (req, res, next) => {
+const infoValidation = (req, res, next) => {
   const MAX_NAME_LENGTH = 50
 
   const {
@@ -76,6 +76,33 @@ const signupValidation = (req, res, next) => {
   }
 
   if (errors.length > 0) {
+    return res.json({
+      status: 'error',
+      message: errors
+    })
+  }
+
+  next()
+}
+
+const targetValidation = (req, res, next) => {
+  const fields = [
+    { name: 'targetHeight', label: '目標身高' },
+    { name: 'targetWeight', label: '目標體重' },
+    { name: 'targetSkeletalMuscle', label: '目標肌肉量' },
+    { name: 'targetBodyFat', label: '目標體脂率' },
+    { name: 'targetVisceralFatLevel', label: '目標內臟脂肪等級' }
+  ]
+  const inputValue = req.body
+  const errors = []
+
+  fields.forEach(field => {
+    if (typeof inputValue[field.name] !== 'number') {
+      errors.push({ message: `${field.label}欄位只能輸入數字` })
+    }
+  })
+
+  if (errors.length) {
     return res.json({
       status: 'error',
       message: errors
@@ -135,7 +162,8 @@ const editRecordValidation = (req, res, next) => {
 
 module.exports = {
   loginValidation,
-  signupValidation,
+  infoValidation,
+  targetValidation,
   createRecordValidation,
   editRecordValidation
 }
