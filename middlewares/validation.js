@@ -6,6 +6,18 @@ function isInvalidLength (input, maxLength) {
   return input.length > maxLength
 }
 
+function checkIfFieldsAreNumbers (fields, inputValue) {
+  const errors = []
+
+  fields.forEach(field => {
+    if (inputValue[field.name] && typeof inputValue[field.name] !== 'number') {
+      errors.push({ message: `${field.label}欄位只能輸入數字` })
+    }
+  })
+
+  return errors
+}
+
 const loginValidation = (req, res, next) => {
   const { email, password } = req.body
 
@@ -94,15 +106,10 @@ const targetValidation = (req, res, next) => {
     { name: 'targetVisceralFatLevel', label: '目標內臟脂肪等級' }
   ]
   const inputValue = req.body
-  const errors = []
 
-  fields.forEach(field => {
-    if (typeof inputValue[field.name] !== 'number') {
-      errors.push({ message: `${field.label}欄位只能輸入數字` })
-    }
-  })
+  const errors = checkIfFieldsAreNumbers(fields, inputValue)
 
-  if (errors.length) {
+  if (errors.length > 0) {
     return res.json({
       status: 'error',
       message: errors
@@ -112,7 +119,7 @@ const targetValidation = (req, res, next) => {
   next()
 }
 
-const createRecordValidation = (req, res, next) => {
+const createWorkoutRecordValidation = (req, res, next) => {
   const MAX_NAME_LENGTH = 30
 
   const { name } = req.body
@@ -134,7 +141,7 @@ const createRecordValidation = (req, res, next) => {
   next()
 }
 
-const editRecordValidation = (req, res, next) => {
+const editWorkoutRecordValidation = (req, res, next) => {
   const MAX_NAME_LENGTH = 30
 
   const { name, date } = req.body
@@ -160,10 +167,40 @@ const editRecordValidation = (req, res, next) => {
   next()
 }
 
+const createAndEditBodydataRecordValidation = (req, res, next) => {
+  const fields = [
+    { name: 'height', label: '身高' },
+    { name: 'weight', label: '體重' },
+    { name: 'skeletalMuscle', label: '肌肉量' },
+    { name: 'bodyFat', label: '體脂率' },
+    { name: 'visceralFatLevel', label: '內臟脂肪等級' }
+  ]
+  const inputValue = req.body
+
+  if (Object.keys(inputValue).length === 0) {
+    return res.json({
+      status: 'error',
+      message: '請至少填寫一項數據'
+    })
+  }
+
+  const errors = checkIfFieldsAreNumbers(fields, inputValue)
+
+  if (errors.length > 0) {
+    return res.json({
+      status: 'error',
+      message: errors
+    })
+  }
+
+  next()
+}
+
 module.exports = {
   loginValidation,
   infoValidation,
   targetValidation,
-  createRecordValidation,
-  editRecordValidation
+  createWorkoutRecordValidation,
+  editWorkoutRecordValidation,
+  createAndEditBodydataRecordValidation
 }

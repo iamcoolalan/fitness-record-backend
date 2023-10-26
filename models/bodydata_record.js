@@ -18,9 +18,9 @@ module.exports = (sequelize, DataTypes) => {
     userId: DataTypes.INTEGER,
     height: DataTypes.FLOAT,
     weight: DataTypes.FLOAT,
-    skeletal_muscle: DataTypes.FLOAT,
-    body_fat: DataTypes.FLOAT,
-    visceral_fat_level: DataTypes.INTEGER,
+    skeletalMuscle: DataTypes.FLOAT,
+    bodyFat: DataTypes.FLOAT,
+    visceralFatLevel: DataTypes.INTEGER,
     date: DataTypes.DATEONLY
   }, {
     sequelize,

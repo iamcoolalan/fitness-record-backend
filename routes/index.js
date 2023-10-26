@@ -5,11 +5,13 @@ const loginSystemController = require('../controllers/login-system-controller')
 const { loginAuth, permissionAuth } = require('../middlewares/auth')
 const { loginValidation, targetValidation, infoValidation } = require('../middlewares/validation')
 
+const bodydataRecord = require('./modules/bodydata-record')
 const workoutRecord = require('./modules/workout-record')
 const user = require('./modules/user')
 
 const router = express.Router()
 
+router.use('/bodydata-record', permissionAuth, bodydataRecord)
 router.use('/workout-record', permissionAuth, workoutRecord)
 router.use('/user', permissionAuth, user)
 
