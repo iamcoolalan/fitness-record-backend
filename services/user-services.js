@@ -2,7 +2,7 @@ const bcrypt = require('bcryptjs')
 
 const { User } = require('../models')
 
-const { CustomError } = require('../middlewares/error-handler')
+const { CustomError } = require('../helpers/error-handler-helpers')
 
 const userServices = {
   doesUserExist: async (email) => {
@@ -16,6 +16,7 @@ const userServices = {
       return user !== null
     } catch (error) {
       throw new CustomError('Failed to find user', {
+        statusCode: 500,
         type: 'DB Error',
         from: 'User Services: doesUserExist',
         detail: error.message
@@ -37,6 +38,7 @@ const userServices = {
       return newUser
     } catch (error) {
       throw new CustomError('Failed to create user', {
+        statusCode: 500,
         type: 'DB Error',
         from: 'User Services: createUser',
         detail: error.message
@@ -61,6 +63,7 @@ const userServices = {
       return userInfo
     } catch (error) {
       throw new CustomError('Can not show this user info', {
+        statusCode: 500,
         type: 'DB Error',
         from: 'User Services: getUserInfo',
         detail: error.message
@@ -102,6 +105,7 @@ const userServices = {
       return returnData
     } catch (error) {
       throw new CustomError('Can not edit this user info', {
+        statusCode: 500,
         type: 'DB Error',
         from: 'User Services: editUserInfo',
         detail: error.message
@@ -126,6 +130,7 @@ const userServices = {
       return userTarget
     } catch (error) {
       throw new CustomError('Can not show this user target', {
+        statusCode: 500,
         type: 'DB Error',
         from: 'User Services: getUserTarget',
         detail: error.message
@@ -168,6 +173,7 @@ const userServices = {
       }
     } catch (error) {
       throw new CustomError('Can not edit this user target', {
+        statusCode: 500,
         type: 'DB Error',
         from: 'User Services: editUserTarget',
         detail: error.message

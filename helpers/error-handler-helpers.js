@@ -4,11 +4,13 @@ class CustomError extends Error {
     this.data = data
   }
 }
-const controllerErrorHelper = (error, next, summary, type, from) => {
+
+const controllerErrorHelper = (error, next, statusCode, summary, type, from) => {
   if (error instanceof CustomError) {
     next(error)
   } else {
     const newError = new CustomError(summary, {
+      statusCode,
       type,
       from,
       detail: error.message

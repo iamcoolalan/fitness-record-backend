@@ -34,6 +34,7 @@ const loginValidation = (req, res, next) => {
 
   if (errors.length > 0) {
     throw new CustomError('輸入欄位錯誤', {
+      statusCode: 400,
       type: 'Validate Error',
       from: 'Login Validation',
       detail: errors.join(', ')
@@ -94,6 +95,7 @@ const infoValidation = (req, res, next) => {
 
   if (errors.length > 0) {
     throw new CustomError('輸入欄位錯誤', {
+      statusCode: 400,
       type: 'Validate Error',
       from: 'Info Validation',
       detail: errors
@@ -117,6 +119,7 @@ const targetValidation = (req, res, next) => {
 
   if (errors.length > 0) {
     throw new CustomError('輸入欄位錯誤', {
+      statusCode: 400,
       type: 'Validate Error',
       from: 'Target Validation',
       detail: errors
@@ -140,6 +143,7 @@ const createWorkoutRecordValidation = (req, res, next) => {
 
   if (errorMessage) {
     throw new CustomError('輸入欄位錯誤', {
+      statusCode: 400,
       type: 'Validate Error',
       from: 'Create Workout Record Validation',
       detail: errorMessage
@@ -167,6 +171,7 @@ const editWorkoutRecordValidation = (req, res, next) => {
 
   if (errors.length > 0) {
     throw new CustomError('輸入欄位錯誤', {
+      statusCode: 400,
       type: 'Validate Error',
       from: 'Edit Workout Record Validation',
       detail: errors
@@ -188,6 +193,7 @@ const createAndEditBodydataRecordValidation = (req, res, next) => {
 
   if (Object.keys(inputValue).length === 0) {
     throw new CustomError('輸入欄位錯誤', {
+      statusCode: 400,
       type: 'Validate Error',
       from: 'Bodydata Record Validation',
       detail: '請至少填寫一項數據'
@@ -198,6 +204,7 @@ const createAndEditBodydataRecordValidation = (req, res, next) => {
 
   if (errors.length > 0) {
     throw new CustomError('輸入欄位錯誤', {
+      statusCode: 400,
       type: 'Validate Error',
       from: 'Bodydata Record Validation',
       detail: errors

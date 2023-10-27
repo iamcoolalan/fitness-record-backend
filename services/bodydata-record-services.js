@@ -1,7 +1,7 @@
 const { Op } = require('sequelize')
 const { BodydataRecord } = require('../models')
 
-const { CustomError } = require('../middlewares/error-handler')
+const { CustomError } = require('../helpers/error-handler-helpers')
 
 const bodydataRecordServices = {
   getRecordsByRange: async (userId, endDate, startDate = endDate) => {
@@ -24,6 +24,7 @@ const bodydataRecordServices = {
       return records
     } catch (error) {
       throw new CustomError('Can not find any record', {
+        statusCode: 500,
         type: 'DB Error',
         from: 'Bodydata Record Services: getRecordsByRange',
         detail: error.message
@@ -38,6 +39,7 @@ const bodydataRecordServices = {
       return record
     } catch (error) {
       throw new CustomError(`Can not find record with id : ${recordId}`, {
+        statusCode: 500,
         type: 'DB Error',
         from: 'Bodydata Record Services: getRecordById',
         detail: error.message
@@ -57,8 +59,8 @@ const bodydataRecordServices = {
 
       return 'Record deleted successfully.'
     } catch (error) {
-      console.log(error.message)
       throw new CustomError(`Can not delete record with id : ${recordId}`, {
+        statusCode: 500,
         type: 'DB Error',
         from: 'Bodydata Record Services: deleteRecord',
         detail: error.message
@@ -79,6 +81,7 @@ const bodydataRecordServices = {
       return newRecord
     } catch (error) {
       throw new CustomError('Can not create record', {
+        statusCode: 500,
         type: 'DB Error',
         from: 'Bodydata Record Services: createNewRecord',
         detail: error.message
@@ -101,6 +104,7 @@ const bodydataRecordServices = {
       return updatedRecord
     } catch (error) {
       throw new CustomError('Can not edit record', {
+        statusCode: 500,
         type: 'DB Error',
         from: 'Bodydata Record Services: editRecord',
         detail: error.message

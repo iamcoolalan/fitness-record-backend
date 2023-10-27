@@ -17,6 +17,7 @@ const userController = {
       controllerErrorHelper(
         error,
         next,
+        500,
         'Can not get user info',
         'Internal Server Error',
         'User Controller: getUserInfo'
@@ -39,6 +40,7 @@ const userController = {
       controllerErrorHelper(
         error,
         next,
+        500,
         'Can not patch user info',
         'Internal Server Error',
         'User Controller: patchUserInfo'
@@ -60,6 +62,7 @@ const userController = {
       controllerErrorHelper(
         error,
         next,
+        500,
         'Can not get user target',
         'Internal Server Error',
         'User Controller: getUserTarget'
@@ -82,6 +85,7 @@ const userController = {
       controllerErrorHelper(
         error,
         next,
+        500,
         'Can not patch user target',
         'Internal Server Error',
         'User Controller: patchUserTarget'

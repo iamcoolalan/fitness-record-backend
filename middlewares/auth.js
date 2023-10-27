@@ -10,6 +10,7 @@ const loginAuth = (req, res, next) => {
 
     if (!user) {
       throw new CustomError('email 或 密碼 錯誤!', {
+        statusCode: 401,
         type: 'Authentication Error',
         from: 'Login Auth',
         detail: info
@@ -29,6 +30,7 @@ const permissionAuth = (req, res, next) => {
 
     if (!user) {
       throw new CustomError('Permission denied', {
+        statusCode: 401,
         type: 'Authentication Error',
         from: 'Permission Auth',
         detail: info

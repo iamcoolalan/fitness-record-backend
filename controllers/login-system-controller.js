@@ -20,6 +20,7 @@ const loginSystemController = {
       controllerErrorHelper(
         error,
         next,
+        500,
         'Login failed',
         'Internal Server Error',
         'Login System Controller: login'
@@ -56,6 +57,7 @@ const loginSystemController = {
       controllerErrorHelper(
         error,
         next,
+        500,
         'Signup failed',
         'Internal Server Error',
         'Login System Controller: signup'

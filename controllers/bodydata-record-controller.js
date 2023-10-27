@@ -19,6 +19,7 @@ const bodydataRecordController = {
       controllerErrorHelper(
         error,
         next,
+        500,
         'Can not get records',
         'Internal Server Error',
         'Bodydata Record Controller: getRecords'
@@ -40,6 +41,7 @@ const bodydataRecordController = {
       controllerErrorHelper(
         error,
         next,
+        500,
         'Can not get record',
         'Internal Server Error',
         'Bodydata Record Controller: getRecord'
@@ -60,9 +62,11 @@ const bodydataRecordController = {
         data: newRecord
       })
     } catch (error) {
+      console.log(123, error)
       controllerErrorHelper(
         error,
         next,
+        500,
         'Can not post record',
         'Internal Server Error',
         'Bodydata Record Controller: postRecord'
@@ -85,6 +89,7 @@ const bodydataRecordController = {
       controllerErrorHelper(
         error,
         next,
+        500,
         'Can not patch record',
         'Internal Server Error',
         'Bodydata Record Controller: patchRecord'
@@ -106,6 +111,7 @@ const bodydataRecordController = {
       controllerErrorHelper(
         error,
         next,
+        500,
         'Can not delete record',
         'Internal Server Error',
         'Bodydata Record Controller: deleteRecord'

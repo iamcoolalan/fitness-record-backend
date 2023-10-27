@@ -1,6 +1,6 @@
 const { Op } = require('sequelize')
 const { sequelize, WorkoutRecord, WorkoutDetail } = require('../models')
-const { CustomError } = require('../middlewares/error-handler')
+const { CustomError } = require('../helpers/error-handler-helpers')
 
 const workoutRecordServices = {
   getRecordsByRange: async (userId, endDate, startDate = endDate) => {
@@ -23,6 +23,7 @@ const workoutRecordServices = {
       return records
     } catch (error) {
       throw new CustomError('Failed to find records', {
+        statusCode: 500,
         type: 'DB Error',
         from: 'Workout Record Services: getRecordsByRange',
         detail: error.message
@@ -39,6 +40,7 @@ const workoutRecordServices = {
       return record
     } catch (error) {
       throw new CustomError('Failed to find record', {
+        statusCode: 500,
         type: 'DB Error',
         from: 'Workout Record Services: getRecordDetail',
         detail: error.message
@@ -57,6 +59,7 @@ const workoutRecordServices = {
       return record
     } catch (error) {
       throw new CustomError('Failed to create record', {
+        statusCode: 500,
         type: 'DB Error',
         from: 'Workout Record Services: createNewRecord',
         detail: error.message
@@ -87,6 +90,7 @@ const workoutRecordServices = {
       }
     } catch (error) {
       throw new CustomError('Failed to update record', {
+        statusCode: 500,
         type: 'DB Error',
         from: 'Workout Record Services: editRecord',
         detail: error.message
@@ -109,6 +113,7 @@ const workoutRecordServices = {
       }
     } catch (error) {
       throw new CustomError('Failed to delete record', {
+        statusCode: 500,
         type: 'DB Error',
         from: 'Workout Record Services: deleteRecord',
         detail: error.message
@@ -137,6 +142,7 @@ const workoutRecordServices = {
       }
     } catch (error) {
       throw new CustomError('Failed to create record details', {
+        statusCode: 500,
         type: 'DB Error',
         from: 'Workout Record Services: createRecordDetail',
         detail: error.message
@@ -164,6 +170,7 @@ const workoutRecordServices = {
       await transaction.rollback()
 
       throw new CustomError('Failed to update record details', {
+        statusCode: 500,
         type: 'DB Error',
         from: 'Workout Record Services: editRecordDetails',
         detail: error.message
@@ -191,6 +198,7 @@ const workoutRecordServices = {
       await transaction.rollback()
 
       throw new CustomError('Failed to delete record details', {
+        statusCode: 500,
         type: 'DB Error',
         from: 'Workout Record Services: deleteRecordDetails',
         detail: error.message

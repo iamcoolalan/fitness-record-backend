@@ -19,6 +19,7 @@ const workoutRecordController = {
       controllerErrorHelper(
         error,
         next,
+        500,
         'Can not get records',
         'Internal Server Error',
         'Workout Record Controller: getRecords'
@@ -40,6 +41,7 @@ const workoutRecordController = {
       controllerErrorHelper(
         error,
         next,
+        500,
         'Can not get record',
         'Internal Server Error',
         'Workout Record Controller: getRecord'
@@ -63,6 +65,7 @@ const workoutRecordController = {
       controllerErrorHelper(
         error,
         next,
+        500,
         'Can not post record',
         'Internal Server Error',
         'Workout Record Controller: postRecord'
@@ -85,6 +88,7 @@ const workoutRecordController = {
       controllerErrorHelper(
         error,
         next,
+        500,
         'Can not patch record',
         'Internal Server Error',
         'Workout Record Controller: patchRecord'
@@ -106,6 +110,7 @@ const workoutRecordController = {
       controllerErrorHelper(
         error,
         next,
+        500,
         'Can not delete record',
         'Internal Server Error',
         'Workout Record Controller: deleteRecord'
@@ -128,6 +133,7 @@ const workoutRecordController = {
       controllerErrorHelper(
         error,
         next,
+        500,
         'Can not post record detail',
         'Internal Server Error',
         'Workout Record Controller: postRecordDetail'
@@ -149,6 +155,7 @@ const workoutRecordController = {
       controllerErrorHelper(
         error,
         next,
+        500,
         'Can not patch record detail',
         'Internal Server Error',
         'Workout Record Controller: patchRecordDetail'
@@ -170,6 +177,7 @@ const workoutRecordController = {
       controllerErrorHelper(
         error,
         next,
+        500,
         'Can not delete record detail',
         'Internal Server Error',
         'Workout Record Controller: deleteRecordDetail'

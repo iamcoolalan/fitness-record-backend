@@ -2,7 +2,7 @@ const { CustomError } = require('../helpers/error-handler-helpers')
 
 const errorHandler = (err, req, res, next) => {
   if (err instanceof CustomError) {
-    const { type, from, detail } = err.data
+    const { statusCode, type, from, detail } = err.data
     const errorInfo = {
       status: 'error',
       type,
@@ -13,7 +13,7 @@ const errorHandler = (err, req, res, next) => {
 
     console.log(errorInfo)
 
-    return res.json(errorInfo)
+    return res.status(statusCode).json(errorInfo)
   } else if (err instanceof Error) {
     const errorInfo = {
       status: 'error',
@@ -23,7 +23,7 @@ const errorHandler = (err, req, res, next) => {
 
     console.log(err.message)
 
-    return res.json(errorInfo)
+    return res.status(500).json(errorInfo)
   } else {
     const errorInfo = {
       status: 'error',
@@ -33,7 +33,7 @@ const errorHandler = (err, req, res, next) => {
 
     console.log(err)
 
-    return res.json(errorInfo)
+    return res.status(500).json(errorInfo)
   }
 }
 

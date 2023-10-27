@@ -22,6 +22,7 @@ router.post('/signup', infoValidation, targetValidation, loginSystemController.s
 
 router.use((req, res, next) => {
   const newError = new CustomError('Sorry, we cannot find that!', {
+    statusCode: 404,
     type: 'Not Found Error',
     from: 'Server',
     detail: '404 Not Found'
