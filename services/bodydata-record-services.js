@@ -47,10 +47,17 @@ const bodydataRecordServices = {
 
   deleteRecord: async (recordId) => {
     try {
-      await BodydataRecord.destroy({ where: { id: recordId } })
+      const record = await BodydataRecord.findByPk(recordId)
+
+      if (!record) {
+        throw new Error(`Can not find this record with id: ${recordId}`)
+      }
+
+      await record.destroy()
 
       return 'Record deleted successfully.'
     } catch (error) {
+      console.log(error.message)
       throw new CustomError(`Can not delete record with id : ${recordId}`, {
         type: 'DB Error',
         from: 'Bodydata Record Services: deleteRecord',
