@@ -101,6 +101,8 @@ const workoutRecordServices = {
       if (record) {
         const deletedRecord = await record.destroy()
 
+        await WorkoutDetail.destroy({ where: { workoutRecordId } })
+
         return deletedRecord
       } else {
         throw new Error('Can not find this record')

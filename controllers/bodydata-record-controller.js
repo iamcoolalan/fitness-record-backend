@@ -27,7 +27,7 @@ const bodydataRecordController = {
   },
 
   getRecord: async (req, res, next) => {
-    const bodydataRecordId = req.params.bodydataRecordId
+    const bodydataRecordId = Number(req.params.bodydataRecordId)
 
     try {
       const record = await bodydataRecordServices.getRecordById(bodydataRecordId)
@@ -71,7 +71,7 @@ const bodydataRecordController = {
   },
 
   patchRecord: async (req, res, next) => {
-    const bodydataRecordId = req.params.bodydataRecordId
+    const bodydataRecordId = Number(req.params.bodydataRecordId)
     const updateData = req.body
 
     try {
@@ -93,7 +93,7 @@ const bodydataRecordController = {
   },
 
   deleteRecord: async (req, res, next) => {
-    const bodydataRecordId = req.params.bodydataRecordId
+    const bodydataRecordId = Number(req.params.bodydataRecordId)
 
     try {
       const deleteRecord = await bodydataRecordServices.deleteRecord(bodydataRecordId)

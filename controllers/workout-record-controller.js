@@ -27,7 +27,7 @@ const workoutRecordController = {
   },
 
   getRecord: async (req, res, next) => {
-    const workoutRecordId = req.params.workoutRecordId
+    const workoutRecordId = Number(req.params.workoutRecordId)
 
     try {
       const record = await workoutRecordServices.getRecordDetail(workoutRecordId)
@@ -71,7 +71,7 @@ const workoutRecordController = {
   },
 
   patchRecord: async (req, res, next) => {
-    const workoutRecordId = req.params.workoutRecordId
+    const workoutRecordId = Number(req.params.workoutRecordId)
     const data = req.body
 
     try {
@@ -93,7 +93,7 @@ const workoutRecordController = {
   },
 
   deleteRecord: async (req, res, next) => {
-    const workoutRecordId = req.params.workoutRecordId
+    const workoutRecordId = Number(req.params.workoutRecordId)
 
     try {
       const deletedRecord = await workoutRecordServices.deleteRecord(workoutRecordId)
@@ -114,7 +114,7 @@ const workoutRecordController = {
   },
 
   postRecordDetail: async (req, res, next) => {
-    const workoutRecordId = req.params.workoutRecordId
+    const workoutRecordId = Number(req.params.workoutRecordId)
     const workoutDetailItems = req.body
 
     try {
