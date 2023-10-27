@@ -1,6 +1,8 @@
 const bodydataRecordServices = require('../services/bodydata-record-services')
 
-const bodaydataRecordController = {
+const { controllerErrorHelper } = require('../helpers/error-handler-helpers')
+
+const bodydataRecordController = {
   getRecords: async (req, res, next) => {
     const userId = req.user.id
     const endDate = req.query.endDate
@@ -14,7 +16,13 @@ const bodaydataRecordController = {
         data: records
       })
     } catch (error) {
-      next(error)
+      controllerErrorHelper(
+        error,
+        next,
+        'Can not get records',
+        'Internal Server Error',
+        'Bodydata Record Controller: getRecords'
+      )
     }
   },
 
@@ -29,7 +37,13 @@ const bodaydataRecordController = {
         data: record
       })
     } catch (error) {
-      next(error)
+      controllerErrorHelper(
+        error,
+        next,
+        'Can not get record',
+        'Internal Server Error',
+        'Bodydata Record Controller: getRecord'
+      )
     }
   },
 
@@ -46,7 +60,13 @@ const bodaydataRecordController = {
         data: newRecord
       })
     } catch (error) {
-      next(error)
+      controllerErrorHelper(
+        error,
+        next,
+        'Can not post record',
+        'Internal Server Error',
+        'Bodydata Record Controller: postRecord'
+      )
     }
   },
 
@@ -62,7 +82,13 @@ const bodaydataRecordController = {
         data: updateResult
       })
     } catch (error) {
-      next(error)
+      controllerErrorHelper(
+        error,
+        next,
+        'Can not patch record',
+        'Internal Server Error',
+        'Bodydata Record Controller: patchRecord'
+      )
     }
   },
 
@@ -77,9 +103,15 @@ const bodaydataRecordController = {
         message: deleteRecord
       })
     } catch (error) {
-      next(error)
+      controllerErrorHelper(
+        error,
+        next,
+        'Can not delete record',
+        'Internal Server Error',
+        'Bodydata Record Controller: deleteRecord'
+      )
     }
   }
 }
 
-module.exports = bodaydataRecordController
+module.exports = bodydataRecordController

@@ -2,6 +2,8 @@ const jwt = require('jsonwebtoken')
 
 const userServices = require('../services/user-services')
 
+const { controllerErrorHelper, CustomError } = require('../helpers/error-handler-helpers')
+
 const loginSystemController = {
   login: (req, res, next) => {
     try {
@@ -10,12 +12,18 @@ const loginSystemController = {
       const key = process.env.JWT_SECRET
       const token = jwt.sign(user, key, { expiresIn: '30d' })
 
-      res.json({
+      return res.json({
         status: 'success',
         token
       })
     } catch (error) {
-      next(error)
+      controllerErrorHelper(
+        error,
+        next,
+        'Login failed',
+        'Internal Server Error',
+        'Login System Controller: login'
+      )
     }
   },
 
@@ -27,10 +35,14 @@ const loginSystemController = {
       const doesUserExist = await userServices.doesUserExist(email)
 
       if (doesUserExist) {
-        return res.json({
-          status: 'error',
-          message: '此Email已註冊'
-        })
+        throw new CustomError(
+          '此Email已註冊',
+          {
+            type: 'Duplicate email Error',
+            from: 'Login System Controller: signup',
+            detail: '此Email已註冊,請使用其他email進行註冊'
+          }
+        )
       }
 
       const user = await userServices.createUser(userData)
@@ -41,7 +53,13 @@ const loginSystemController = {
         data: user
       })
     } catch (error) {
-      next(error)
+      controllerErrorHelper(
+        error,
+        next,
+        'Signup failed',
+        'Internal Server Error',
+        'Login System Controller: signup'
+      )
     }
   }
 }

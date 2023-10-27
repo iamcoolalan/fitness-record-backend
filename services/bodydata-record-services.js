@@ -1,6 +1,8 @@
 const { Op } = require('sequelize')
 const { BodydataRecord } = require('../models')
 
+const { CustomError } = require('../middlewares/error-handler')
+
 const bodydataRecordServices = {
   getRecordsByRange: async (userId, endDate, startDate = endDate) => {
     try {
@@ -21,7 +23,11 @@ const bodydataRecordServices = {
 
       return records
     } catch (error) {
-      throw new Error(`Can not find any record. Reason: ${error.message}`)
+      throw new CustomError('Can not find any record', {
+        type: 'DB Error',
+        from: 'Bodydata Record Services: getRecordsByRange',
+        detail: error.message
+      })
     }
   },
 
@@ -31,7 +37,11 @@ const bodydataRecordServices = {
 
       return record
     } catch (error) {
-      throw new Error(`Can not find record with id : ${recordId}. Reason: ${error.message}`)
+      throw new CustomError(`Can not find record with id : ${recordId}`, {
+        type: 'DB Error',
+        from: 'Bodydata Record Services: getRecordById',
+        detail: error.message
+      })
     }
   },
 
@@ -41,7 +51,11 @@ const bodydataRecordServices = {
 
       return 'Record deleted successfully.'
     } catch (error) {
-      throw new Error(`Can not delete record with id : ${recordId}. Reason: ${error.message}`)
+      throw new CustomError(`Can not delete record with id : ${recordId}`, {
+        type: 'DB Error',
+        from: 'Bodydata Record Services: deleteRecord',
+        detail: error.message
+      })
     }
   },
 
@@ -57,7 +71,11 @@ const bodydataRecordServices = {
 
       return newRecord
     } catch (error) {
-      throw new Error(`Can not create record. Reason: ${error.message}`)
+      throw new CustomError('Can not create record', {
+        type: 'DB Error',
+        from: 'Bodydata Record Services: createNewRecord',
+        detail: error.message
+      })
     }
   },
 
@@ -73,9 +91,13 @@ const bodydataRecordServices = {
 
       const updatedRecord = await record.update(updateData)
 
-      return updateData
+      return updatedRecord
     } catch (error) {
-      throw new Error(`Can not edit record. Reason: ${error.message}`)
+      throw new CustomError('Can not edit record', {
+        type: 'DB Error',
+        from: 'Bodydata Record Services: editRecord',
+        detail: error.message
+      })
     }
   }
 }

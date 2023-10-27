@@ -1,5 +1,6 @@
 const { Op } = require('sequelize')
 const { sequelize, WorkoutRecord, WorkoutDetail } = require('../models')
+const { CustomError } = require('../middlewares/error-handler')
 
 const workoutRecordServices = {
   getRecordsByRange: async (userId, endDate, startDate = endDate) => {
@@ -7,7 +8,7 @@ const workoutRecordServices = {
       const endDateToQuery = new Date(endDate)
       const startDateToQuery = new Date(startDate)
 
-      const records = WorkoutRecord.findAndCountAll({
+      const records = await WorkoutRecord.findAndCountAll({
         where: {
           userId,
           date: {
@@ -21,8 +22,11 @@ const workoutRecordServices = {
 
       return records
     } catch (error) {
-      console.log(error)
-      throw new Error('Failed to find records')
+      throw new CustomError('Failed to find records', {
+        type: 'DB Error',
+        from: 'Workout Record Services: getRecordsByRange',
+        detail: error.message
+      })
     }
   },
 
@@ -34,7 +38,11 @@ const workoutRecordServices = {
 
       return record
     } catch (error) {
-      throw new Error('Failed to find record')
+      throw new CustomError('Failed to find record', {
+        type: 'DB Error',
+        from: 'Workout Record Services: getRecordDetail',
+        detail: error.message
+      })
     }
   },
 
@@ -48,7 +56,11 @@ const workoutRecordServices = {
 
       return record
     } catch (error) {
-      throw new Error('Failed to create record')
+      throw new CustomError('Failed to create record', {
+        type: 'DB Error',
+        from: 'Workout Record Services: createNewRecord',
+        detail: error.message
+      })
     }
   },
 
@@ -74,7 +86,11 @@ const workoutRecordServices = {
         throw new Error('Can not find this record')
       }
     } catch (error) {
-      throw new Error('Failed to update record')
+      throw new CustomError('Failed to update record', {
+        type: 'DB Error',
+        from: 'Workout Record Services: editRecord',
+        detail: error.message
+      })
     }
   },
 
@@ -90,7 +106,11 @@ const workoutRecordServices = {
         throw new Error('Can not find this record')
       }
     } catch (error) {
-      throw new Error('Failed to delete record')
+      throw new CustomError('Failed to delete record', {
+        type: 'DB Error',
+        from: 'Workout Record Services: deleteRecord',
+        detail: error.message
+      })
     }
   },
 
@@ -114,7 +134,11 @@ const workoutRecordServices = {
         throw new Error('Can not find this record')
       }
     } catch (error) {
-      throw new Error(`Failed to create record details. Reason: ${error.message}`)
+      throw new CustomError('Failed to create record details', {
+        type: 'DB Error',
+        from: 'Workout Record Services: createRecordDetail',
+        detail: error.message
+      })
     }
   },
 
@@ -137,7 +161,11 @@ const workoutRecordServices = {
     } catch (error) {
       await transaction.rollback()
 
-      throw new Error(`Failed to update record details. Reason: ${error.message}`)
+      throw new CustomError('Failed to update record details', {
+        type: 'DB Error',
+        from: 'Workout Record Services: editRecordDetails',
+        detail: error.message
+      })
     }
   },
 
@@ -160,7 +188,11 @@ const workoutRecordServices = {
     } catch (error) {
       await transaction.rollback()
 
-      throw new Error(`Failed to delete record details. Reason: ${error.message}`)
+      throw new CustomError('Failed to delete record details', {
+        type: 'DB Error',
+        from: 'Workout Record Services: deleteRecordDetails',
+        detail: error.message
+      })
     }
   }
 }

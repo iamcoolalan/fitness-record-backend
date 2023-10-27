@@ -1,3 +1,5 @@
+const { CustomError } = require('../helpers/error-handler-helpers')
+
 function isInputEmpty (input) {
   return input.trim().length === 0
 }
@@ -20,18 +22,21 @@ function checkIfFieldsAreNumbers (fields, inputValue) {
 
 const loginValidation = (req, res, next) => {
   const { email, password } = req.body
+  const errors = []
 
   if (isInputEmpty(email)) {
-    return res.json({
-      status: 'errors',
-      message: '請輸入email'
-    })
+    errors.push('請輸入email')
   }
 
   if (isInputEmpty(password)) {
-    return res.json({
-      status: 'errors',
-      message: '請輸入密碼'
+    errors.push('請輸入密碼')
+  }
+
+  if (errors.length > 0) {
+    throw new CustomError('輸入欄位錯誤', {
+      type: 'Validate Error',
+      from: 'Login Validation',
+      detail: errors.join(', ')
     })
   }
 
@@ -88,9 +93,10 @@ const infoValidation = (req, res, next) => {
   }
 
   if (errors.length > 0) {
-    return res.json({
-      status: 'error',
-      message: errors
+    throw new CustomError('輸入欄位錯誤', {
+      type: 'Validate Error',
+      from: 'Info Validation',
+      detail: errors
     })
   }
 
@@ -110,9 +116,10 @@ const targetValidation = (req, res, next) => {
   const errors = checkIfFieldsAreNumbers(fields, inputValue)
 
   if (errors.length > 0) {
-    return res.json({
-      status: 'error',
-      message: errors
+    throw new CustomError('輸入欄位錯誤', {
+      type: 'Validate Error',
+      from: 'Target Validation',
+      detail: errors
     })
   }
 
@@ -132,9 +139,10 @@ const createWorkoutRecordValidation = (req, res, next) => {
   }
 
   if (errorMessage) {
-    return res.json({
-      status: 'error',
-      message: errorMessage
+    throw new CustomError('輸入欄位錯誤', {
+      type: 'Validate Error',
+      from: 'Create Workout Record Validation',
+      detail: errorMessage
     })
   }
 
@@ -158,9 +166,10 @@ const editWorkoutRecordValidation = (req, res, next) => {
   }
 
   if (errors.length > 0) {
-    return res.json({
-      status: 'error',
-      message: errors
+    throw new CustomError('輸入欄位錯誤', {
+      type: 'Validate Error',
+      from: 'Edit Workout Record Validation',
+      detail: errors
     })
   }
 
@@ -178,18 +187,21 @@ const createAndEditBodydataRecordValidation = (req, res, next) => {
   const inputValue = req.body
 
   if (Object.keys(inputValue).length === 0) {
-    return res.json({
-      status: 'error',
-      message: '請至少填寫一項數據'
+    throw new CustomError('輸入欄位錯誤', {
+      type: 'Validate Error',
+      from: 'Bodydata Record Validation',
+      detail: '請至少填寫一項數據'
     })
   }
 
   const errors = checkIfFieldsAreNumbers(fields, inputValue)
 
   if (errors.length > 0) {
-    return res.json({
-      status: 'error',
-      message: errors
+    throw new CustomError('輸入欄位錯誤', {
+      type: 'Validate Error',
+      from: 'Bodydata Record Validation',
+      detail: errors
+
     })
   }
 

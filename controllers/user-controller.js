@@ -1,5 +1,7 @@
 const userServices = require('../services/user-services')
 
+const { controllerErrorHelper } = require('../helpers/error-handler-helpers')
+
 const userController = {
   getUserInfo: async (req, res, next) => {
     const userId = req.user.id
@@ -12,7 +14,13 @@ const userController = {
         data: userInfo
       })
     } catch (error) {
-      next(error)
+      controllerErrorHelper(
+        error,
+        next,
+        'Can not get user info',
+        'Internal Server Error',
+        'User Controller: getUserInfo'
+      )
     }
   },
 
@@ -28,7 +36,13 @@ const userController = {
         data: updateUserInfo
       })
     } catch (error) {
-      next(error)
+      controllerErrorHelper(
+        error,
+        next,
+        'Can not patch user info',
+        'Internal Server Error',
+        'User Controller: patchUserInfo'
+      )
     }
   },
 
@@ -43,7 +57,13 @@ const userController = {
         data: userTarget
       })
     } catch (error) {
-      next(error)
+      controllerErrorHelper(
+        error,
+        next,
+        'Can not get user target',
+        'Internal Server Error',
+        'User Controller: getUserTarget'
+      )
     }
   },
 
@@ -59,7 +79,13 @@ const userController = {
         data: updatedTarget
       })
     } catch (error) {
-      next(error)
+      controllerErrorHelper(
+        error,
+        next,
+        'Can not patch user target',
+        'Internal Server Error',
+        'User Controller: patchUserTarget'
+      )
     }
   }
 }

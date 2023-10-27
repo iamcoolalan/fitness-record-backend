@@ -4,6 +4,7 @@ const loginSystemController = require('../controllers/login-system-controller')
 
 const { loginAuth, permissionAuth } = require('../middlewares/auth')
 const { loginValidation, targetValidation, infoValidation } = require('../middlewares/validation')
+const { errorHandler } = require('../middlewares/error-handler')
 
 const bodydataRecord = require('./modules/bodydata-record')
 const workoutRecord = require('./modules/workout-record')
@@ -21,5 +22,7 @@ router.post('/signup', infoValidation, targetValidation, loginSystemController.s
 router.get('*', permissionAuth, (req, res) => {
   res.send('hi')
 })
+
+router.use('/', errorHandler)
 
 module.exports = router

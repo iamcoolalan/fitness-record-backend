@@ -2,6 +2,8 @@ const bcrypt = require('bcryptjs')
 
 const { User } = require('../models')
 
+const { CustomError } = require('../middlewares/error-handler')
+
 const userServices = {
   doesUserExist: async (email) => {
     try {
@@ -13,7 +15,11 @@ const userServices = {
 
       return user !== null
     } catch (error) {
-      throw new Error('Failed to find user.')
+      throw new CustomError('Failed to find user', {
+        type: 'DB Error',
+        from: 'User Services: doesUserExist',
+        detail: error.message
+      })
     }
   },
 
@@ -30,7 +36,11 @@ const userServices = {
 
       return newUser
     } catch (error) {
-      throw new Error('Failed to create user.')
+      throw new CustomError('Failed to create user', {
+        type: 'DB Error',
+        from: 'User Services: createUser',
+        detail: error.message
+      })
     }
   },
 
@@ -50,7 +60,11 @@ const userServices = {
 
       return userInfo
     } catch (error) {
-      throw new Error(`Can not show this user info. Reason: ${error.message}`)
+      throw new CustomError('Can not show this user info', {
+        type: 'DB Error',
+        from: 'User Services: getUserInfo',
+        detail: error.message
+      })
     }
   },
 
@@ -87,7 +101,11 @@ const userServices = {
 
       return returnData
     } catch (error) {
-      throw new Error(`Can not edit this user info. Reason: ${error.message}`)
+      throw new CustomError('Can not edit this user info', {
+        type: 'DB Error',
+        from: 'User Services: editUserInfo',
+        detail: error.message
+      })
     }
   },
 
@@ -107,7 +125,11 @@ const userServices = {
 
       return userTarget
     } catch (error) {
-      throw new Error(`Can not show this user target. Reason: ${error.message}`)
+      throw new CustomError('Can not show this user target', {
+        type: 'DB Error',
+        from: 'User Services: getUserTarget',
+        detail: error.message
+      })
     }
   },
 
@@ -145,7 +167,11 @@ const userServices = {
         currentTarget
       }
     } catch (error) {
-      throw new Error(`Can not edit this user target. Reason: ${error.message}`)
+      throw new CustomError('Can not edit this user target', {
+        type: 'DB Error',
+        from: 'User Services: editUserTarget',
+        detail: error.message
+      })
     }
   }
 }

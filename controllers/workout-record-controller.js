@@ -1,5 +1,7 @@
 const workoutRecordServices = require('../services/workout-record-services')
 
+const { controllerErrorHelper } = require('../helpers/error-handler-helpers')
+
 const workoutRecordController = {
   getRecords: async (req, res, next) => {
     const userId = req.user.id
@@ -14,8 +16,13 @@ const workoutRecordController = {
         data: records
       })
     } catch (error) {
-      console.log(error)
-      next(error)
+      controllerErrorHelper(
+        error,
+        next,
+        'Can not get records',
+        'Internal Server Error',
+        'Workout Record Controller: getRecords'
+      )
     }
   },
 
@@ -30,7 +37,13 @@ const workoutRecordController = {
         data: record
       })
     } catch (error) {
-      next(error)
+      controllerErrorHelper(
+        error,
+        next,
+        'Can not get record',
+        'Internal Server Error',
+        'Workout Record Controller: getRecord'
+      )
     }
   },
 
@@ -42,12 +55,18 @@ const workoutRecordController = {
     try {
       const newRecord = await workoutRecordServices.createNewRecord(userId, date, name)
 
-      res.json({
+      return res.json({
         status: 'success',
         data: newRecord
       })
     } catch (error) {
-      next(error)
+      controllerErrorHelper(
+        error,
+        next,
+        'Can not post record',
+        'Internal Server Error',
+        'Workout Record Controller: postRecord'
+      )
     }
   },
 
@@ -58,12 +77,18 @@ const workoutRecordController = {
     try {
       const updatedRecord = await workoutRecordServices.editRecord(workoutRecordId, data)
 
-      res.json({
+      return res.json({
         status: 'success',
         data: updatedRecord
       })
     } catch (error) {
-      next(error)
+      controllerErrorHelper(
+        error,
+        next,
+        'Can not patch record',
+        'Internal Server Error',
+        'Workout Record Controller: patchRecord'
+      )
     }
   },
 
@@ -78,7 +103,13 @@ const workoutRecordController = {
         data: deletedRecord
       })
     } catch (error) {
-      next(error)
+      controllerErrorHelper(
+        error,
+        next,
+        'Can not delete record',
+        'Internal Server Error',
+        'Workout Record Controller: deleteRecord'
+      )
     }
   },
 
@@ -89,12 +120,18 @@ const workoutRecordController = {
     try {
       const newWorkoutDetails = await workoutRecordServices.createRecordDetail(workoutRecordId, workoutDetailItems)
 
-      res.json({
+      return res.json({
         status: 'success',
         data: newWorkoutDetails
       })
     } catch (error) {
-      next(error)
+      controllerErrorHelper(
+        error,
+        next,
+        'Can not post record detail',
+        'Internal Server Error',
+        'Workout Record Controller: postRecordDetail'
+      )
     }
   },
 
@@ -104,12 +141,18 @@ const workoutRecordController = {
     try {
       await workoutRecordServices.editRecordDetails(updateWorkoutDetails)
 
-      res.json({
+      return res.json({
         status: 'success',
         message: 'Update complete'
       })
     } catch (error) {
-      next(error)
+      controllerErrorHelper(
+        error,
+        next,
+        'Can not patch record detail',
+        'Internal Server Error',
+        'Workout Record Controller: patchRecordDetail'
+      )
     }
   },
 
@@ -119,12 +162,18 @@ const workoutRecordController = {
     try {
       await workoutRecordServices.deleteRecordDetails(deleteWorkoutDetails)
 
-      res.json({
+      return res.json({
         status: 'success',
         message: 'Delete complete'
       })
     } catch (error) {
-      next(error)
+      controllerErrorHelper(
+        error,
+        next,
+        'Can not delete record detail',
+        'Internal Server Error',
+        'Workout Record Controller: deleteRecordDetail'
+      )
     }
   }
 }

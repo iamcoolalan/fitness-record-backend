@@ -1,5 +1,7 @@
 const passport = require('../config/passport')
 
+const { CustomError } = require('../helpers/error-handler-helpers')
+
 const loginAuth = (req, res, next) => {
   passport.authenticate('local', { session: false }, (err, user, info) => {
     if (err) {
@@ -7,9 +9,10 @@ const loginAuth = (req, res, next) => {
     }
 
     if (!user) {
-      return res.status(401).json({
-        status: 'error',
-        message: 'email 或 密碼 錯誤!'
+      throw new CustomError('email 或 密碼 錯誤!', {
+        type: 'Authentication Error',
+        from: 'Login Auth',
+        detail: info
       })
     }
 
@@ -25,9 +28,10 @@ const permissionAuth = (req, res, next) => {
     }
 
     if (!user) {
-      return res.status(401).json({
-        status: 'error',
-        message: 'Permission denied'
+      throw new CustomError('Permission denied', {
+        type: 'Authentication Error',
+        from: 'Permission Auth',
+        detail: info
       })
     }
 
