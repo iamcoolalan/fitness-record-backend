@@ -39,6 +39,7 @@ const loginSystemController = {
         throw new CustomError(
           '此Email已註冊',
           {
+            statusCode: 500,
             type: 'Duplicate email Error',
             from: 'Login System Controller: signup',
             detail: '此Email已註冊,請使用其他email進行註冊'
@@ -63,6 +64,13 @@ const loginSystemController = {
         'Login System Controller: signup'
       )
     }
+  },
+
+  checkToken: (req, res) => {
+    res.json({
+      status: 'success',
+      message: 'valid token'
+    })
   }
 }
 

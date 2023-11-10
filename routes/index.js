@@ -17,6 +17,8 @@ router.use('/bodydata-record', permissionAuth, bodydataRecord)
 router.use('/workout-record', permissionAuth, workoutRecord)
 router.use('/user', permissionAuth, user)
 
+router.get('/check-token', permissionAuth, loginSystemController.checkToken)
+
 router.post('/login', loginValidation, loginAuth, loginSystemController.login)
 router.post('/signup', infoValidation, targetValidation, loginSystemController.signup)
 
