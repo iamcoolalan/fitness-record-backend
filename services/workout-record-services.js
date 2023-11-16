@@ -1,5 +1,5 @@
 const { Op } = require('sequelize')
-const { sequelize, WorkoutRecord, WorkoutDetail } = require('../models')
+const { sequelize, WorkoutRecord, WorkoutDetail, WorkoutCategory } = require('../models')
 const { CustomError } = require('../helpers/error-handler-helpers')
 
 const workoutRecordServices = {
@@ -34,7 +34,14 @@ const workoutRecordServices = {
   getRecordDetail: async (workoutRecordId) => {
     try {
       const record = await WorkoutRecord.findByPk(workoutRecordId, {
-        include: [WorkoutDetail]
+        include: [{
+          model: WorkoutDetail,
+          attributes: ['id', 'workoutCategoryId', 'totalSets', 'repetitions', 'weight'],
+          include: {
+            model: WorkoutCategory,
+            attributes: ['name', 'path']
+          }
+        }]
       })
 
       return record
