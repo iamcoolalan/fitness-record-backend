@@ -1,15 +1,23 @@
 const workoutRecordServices = require('../services/workout-record-services')
 
 const { controllerErrorHelper } = require('../helpers/error-handler-helpers')
+const { getOffset } = require('../helpers/pagination-helper')
 
 const workoutRecordController = {
   getRecords: async (req, res, next) => {
+    const DEFAULT_LIMIT = 5
+
     const userId = req.user.id
     const endDate = req.query.endDate
     const startDate = req.query.startDate ? req.query.startDate : undefined
+    const page = Number(req.query.page)
+    const limit = req.query.limit !== undefined ? Number(req.query.limit) : DEFAULT_LIMIT
+    console.log('page', page)
+
+    const offset = getOffset(limit, page)
 
     try {
-      const records = await workoutRecordServices.getRecordsByRange(userId, endDate, startDate)
+      const records = await workoutRecordServices.getRecordsByRange(userId, limit, offset, endDate, startDate)
 
       return res.json({
         status: 'success',

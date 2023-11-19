@@ -3,12 +3,16 @@ const { sequelize, WorkoutRecord, WorkoutDetail, WorkoutCategory } = require('..
 const { CustomError } = require('../helpers/error-handler-helpers')
 
 const workoutRecordServices = {
-  getRecordsByRange: async (userId, endDate, startDate = endDate) => {
+  getRecordsByRange: async (userId, limit, offset, endDate, startDate = endDate) => {
     try {
+      console.log('limit', limit)
+      console.log('offset', offset)
+      console.log('endDate', endDate)
+      console.log('startDate', startDate)
       const endDateToQuery = new Date(endDate)
       const startDateToQuery = new Date(startDate)
 
-      const records = await WorkoutRecord.findAndCountAll({
+      const queryOptions = {
         where: {
           userId,
           date: {
@@ -16,9 +20,19 @@ const workoutRecordServices = {
             [Op.lte]: endDateToQuery
           }
         },
-        order: [['date', 'ASC']],
+        order: [['date', 'DESC']],
         raw: true
-      })
+      }
+
+      if (limit > 0) {
+        queryOptions.limit = limit
+      }
+
+      if (offset) {
+        queryOptions.offset = offset
+      }
+
+      const records = await WorkoutRecord.findAndCountAll(queryOptions)
 
       return records
     } catch (error) {
