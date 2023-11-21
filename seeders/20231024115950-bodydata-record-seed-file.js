@@ -35,7 +35,7 @@ function getRandomSkeletalMuscle (baseValue, index) {
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up (queryInterface, Sequelize) {
-    const NUM_OF_RECORD = 7
+    const NUM_OF_RECORD = 30
 
     try {
       const users = await queryInterface.sequelize.query(

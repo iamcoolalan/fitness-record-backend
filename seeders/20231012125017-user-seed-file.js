@@ -5,7 +5,7 @@ const bcrypt = require('bcryptjs')
 const { faker } = require('@faker-js/faker')
 
 const BCRYPT_SALT_ROUNDS = 10
-const USER_AMOUNT = 6
+const USER_AMOUNT = 3
 const ACTIVITY_FACTOR = ['sedentary', 'lightly_active', 'moderately_active', 'very_active', 'extra_active']
 
 function getRandomInt (min, max) {

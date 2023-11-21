@@ -5,6 +5,7 @@ const workoutRecordController = require('../../controllers/workout-record-contro
 
 const { createWorkoutRecordValidation, editWorkoutRecordValidation } = require('../../middlewares/validation')
 
+router.get('/category', workoutRecordController.getRecordCategories)
 router.get('/:workoutRecordId', workoutRecordController.getRecord)
 router.get('/', workoutRecordController.getRecords)
 

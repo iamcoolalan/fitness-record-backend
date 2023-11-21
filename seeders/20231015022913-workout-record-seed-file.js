@@ -1,7 +1,7 @@
 'use strict'
 
 /** @type {import('sequelize-cli').Migration} */
-const WORKOUT_FREQUENCY_PER_WEEK = 7
+const WORKOUT_DAY = 30
 
 function randomWorkoutTime (max, min, increment) {
   const MIN_WORKOUT_MINUTES = min
@@ -21,7 +21,7 @@ module.exports = {
     )
 
     for (const user of users) {
-      for (let i = 0; i < WORKOUT_FREQUENCY_PER_WEEK; i++) {
+      for (let i = 0; i < WORKOUT_DAY; i++) {
         // 假設每人每天運動的次數是0~2次
         const randomWorkoutTimesPerDay = Math.floor(Math.random() * 3)
 

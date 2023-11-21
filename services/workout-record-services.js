@@ -69,11 +69,12 @@ const workoutRecordServices = {
     }
   },
 
-  createNewRecord: async (userId, date, name) => {
+  createNewRecord: async (userId, date, name, workoutTime) => {
     try {
       const record = await WorkoutRecord.create({
         userId,
         date,
+        workoutTime,
         name: name || undefined
       })
 
@@ -222,6 +223,25 @@ const workoutRecordServices = {
         statusCode: 500,
         type: 'DB Error',
         from: 'Workout Record Services: deleteRecordDetails',
+        detail: error.message
+      })
+    }
+  },
+
+  getRecordCategories: async () => {
+    try {
+      const categories = await WorkoutCategory.findAll({
+        attributes: ['id', 'name', 'isAddable', 'path'],
+        raw: true
+      })
+
+      return categories
+    } catch (error) {
+      console.log('ttt', error)
+      throw new CustomError('Failed to get record categories', {
+        statusCode: 500,
+        type: 'DB Error',
+        from: 'Workout Record Services: getRecordCategories',
         detail: error.message
       })
     }

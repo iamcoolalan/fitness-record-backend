@@ -58,12 +58,11 @@ const workoutRecordController = {
   },
 
   postRecord: async (req, res, next) => {
-    const { name } = req.body
-    const date = req.query.date
+    const { name, date, workoutTime } = req.body
     const userId = req.user.id
 
     try {
-      const newRecord = await workoutRecordServices.createNewRecord(userId, date, name)
+      const newRecord = await workoutRecordServices.createNewRecord(userId, date, name, workoutTime)
 
       return res.json({
         status: 'success',
@@ -189,6 +188,26 @@ const workoutRecordController = {
         'Can not delete record detail',
         'Internal Server Error',
         'Workout Record Controller: deleteRecordDetail'
+      )
+    }
+  },
+
+  getRecordCategories: async (req, res, next) => {
+    try {
+      const categories = await workoutRecordServices.getRecordCategories()
+
+      return res.json({
+        status: 'success',
+        data: categories
+      })
+    } catch (error) {
+      controllerErrorHelper(
+        error,
+        next,
+        500,
+        'Can not get record category',
+        'Internal Server Error',
+        'Workout Record Controller: getRecordCategories'
       )
     }
   }
