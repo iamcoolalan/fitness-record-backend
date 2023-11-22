@@ -5,10 +5,6 @@ const { CustomError } = require('../helpers/error-handler-helpers')
 const workoutRecordServices = {
   getRecordsByRange: async (userId, limit, offset, endDate, startDate = endDate) => {
     try {
-      console.log('limit', limit)
-      console.log('offset', offset)
-      console.log('endDate', endDate)
-      console.log('startDate', startDate)
       const endDateToQuery = new Date(endDate)
       const startDateToQuery = new Date(startDate)
 
@@ -172,19 +168,17 @@ const workoutRecordServices = {
     }
   },
 
-  editRecordDetails: async (updateWorkoutDetails) => {
+  editRecordDetails: async (updateWorkoutDetails, workoutRecordId) => {
     const transaction = await sequelize.transaction()
 
     try {
       for (const updateDetail of updateWorkoutDetails) {
-        const [affectedRows] = await WorkoutDetail.update(updateDetail, {
-          where: { id: updateDetail.id },
+        await WorkoutDetail.upsert({
+          ...updateDetail,
+          workoutRecordId
+        }, {
           transaction
         })
-
-        if (affectedRows === 0) {
-          throw new Error(`Can not find this detail with id:${updateDetail.id}`)
-        }
       }
 
       await transaction.commit()
@@ -237,7 +231,6 @@ const workoutRecordServices = {
 
       return categories
     } catch (error) {
-      console.log('ttt', error)
       throw new CustomError('Failed to get record categories', {
         statusCode: 500,
         type: 'DB Error',

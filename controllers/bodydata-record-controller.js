@@ -62,7 +62,6 @@ const bodydataRecordController = {
         data: newRecord
       })
     } catch (error) {
-      console.log(123, error)
       controllerErrorHelper(
         error,
         next,

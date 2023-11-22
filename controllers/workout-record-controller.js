@@ -12,8 +12,6 @@ const workoutRecordController = {
     const startDate = req.query.startDate ? req.query.startDate : undefined
     const page = Number(req.query.page)
     const limit = req.query.limit !== undefined ? Number(req.query.limit) : DEFAULT_LIMIT
-    console.log('page', page)
-
     const offset = getOffset(limit, page)
 
     try {
@@ -150,9 +148,10 @@ const workoutRecordController = {
 
   patchRecordDetail: async (req, res, next) => {
     const updateWorkoutDetails = req.body
+    const workoutRecordId = req.params.workoutRecordId
 
     try {
-      await workoutRecordServices.editRecordDetails(updateWorkoutDetails)
+      await workoutRecordServices.editRecordDetails(updateWorkoutDetails, workoutRecordId)
 
       return res.json({
         status: 'success',

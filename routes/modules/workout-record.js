@@ -12,7 +12,7 @@ router.get('/', workoutRecordController.getRecords)
 router.post('/:workoutRecordId/details', workoutRecordController.postRecordDetail)
 router.post('/', createWorkoutRecordValidation, workoutRecordController.postRecord)
 
-router.patch('/details', workoutRecordController.patchRecordDetail)
+router.patch('/:workoutRecordId/details', workoutRecordController.patchRecordDetail)
 router.patch('/:workoutRecordId', editWorkoutRecordValidation, workoutRecordController.patchRecord)
 
 router.delete('/details', workoutRecordController.deleteRecordDetail)
