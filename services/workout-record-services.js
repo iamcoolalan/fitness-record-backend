@@ -194,13 +194,16 @@ const workoutRecordServices = {
     }
   },
 
-  deleteRecordDetails: async (deleteWorkoutDetails) => {
+  deleteRecordDetails: async (deleteWorkoutDetails, workoutRecordId) => {
     const transaction = await sequelize.transaction()
 
     try {
       for (const deleteDetail of deleteWorkoutDetails) {
         const affectedRows = await WorkoutDetail.destroy({
-          where: { id: deleteDetail.id },
+          where: {
+            id: deleteDetail.id,
+            workoutRecordId
+          },
           transaction
         })
 

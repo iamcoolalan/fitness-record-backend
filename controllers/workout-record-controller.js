@@ -171,9 +171,10 @@ const workoutRecordController = {
 
   deleteRecordDetail: async (req, res, next) => {
     const deleteWorkoutDetails = req.body
+    const workoutRecordId = req.params.workoutRecordId
 
     try {
-      await workoutRecordServices.deleteRecordDetails(deleteWorkoutDetails)
+      await workoutRecordServices.deleteRecordDetails(deleteWorkoutDetails, workoutRecordId)
 
       return res.json({
         status: 'success',

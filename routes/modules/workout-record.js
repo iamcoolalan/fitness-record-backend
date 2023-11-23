@@ -15,7 +15,7 @@ router.post('/', createWorkoutRecordValidation, workoutRecordController.postReco
 router.patch('/:workoutRecordId/details', workoutRecordController.patchRecordDetail)
 router.patch('/:workoutRecordId', editWorkoutRecordValidation, workoutRecordController.patchRecord)
 
-router.delete('/details', workoutRecordController.deleteRecordDetail)
+router.delete('/:workoutRecordId/details', workoutRecordController.deleteRecordDetail)
 router.delete('/:workoutRecordId', workoutRecordController.deleteRecord)
 
 module.exports = router
