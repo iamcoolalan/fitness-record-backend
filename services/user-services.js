@@ -155,22 +155,9 @@ const userServices = {
         throw new Error(`Can not find this user with id: ${userId}`)
       }
 
-      const { id, ...previousTarget } = { ...user.get() }
       const updatedUser = await user.update(updateTarget)
 
-      const currentTarget = {
-        targetHeight: updatedUser.targetHeight,
-        targetWeight: updatedUser.targetWeight,
-        targetSkeletalMuscle: updatedUser.targetSkeletalMuscle,
-        targetBodyFat: updatedUser.targetBodyFat,
-        targetVisceralFatLevel: updatedUser.targetVisceralFatLevel
-      }
-
-      return {
-        id: userId,
-        previousTarget,
-        currentTarget
-      }
+      return updatedUser
     } catch (error) {
       throw new CustomError('Can not edit this user target', {
         statusCode: 500,

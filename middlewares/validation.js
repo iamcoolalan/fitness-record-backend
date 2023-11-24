@@ -51,7 +51,8 @@ const infoValidation = (req, res, next) => {
     name,
     email,
     password,
-    passwordCheck
+    passwordCheck,
+    isRegister
   } = req.body
 
   const errors = []
@@ -77,17 +78,21 @@ const infoValidation = (req, res, next) => {
     })
   }
 
-  if (isInputEmpty(password)) {
-    errors.push({
-      message: '密碼不得空白'
-    })
+  if (isRegister) {
+    if (isInputEmpty(password)) {
+      errors.push({
+        message: '密碼不得空白'
+      })
+    }
+
+    if (isInputEmpty(passwordCheck)) {
+      errors.push({
+        message: '請再次瑱入密碼'
+      })
+    }
   }
 
-  if (isInputEmpty(passwordCheck)) {
-    errors.push({
-      message: '請再次瑱入密碼'
-    })
-  } else if (password !== passwordCheck) {
+  if (password !== passwordCheck) {
     errors.push({
       message: '密碼與確認密碼不相符'
     })
