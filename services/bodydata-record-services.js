@@ -4,22 +4,44 @@ const { BodydataRecord } = require('../models')
 const { CustomError } = require('../helpers/error-handler-helpers')
 
 const bodydataRecordServices = {
-  getRecordsByRange: async (userId, endDate, startDate = endDate) => {
+  getRecordsByRange: async (userId, limit, offset, endDate, startDate = endDate) => {
     try {
       const startDateToQuery = new Date(startDate)
       const endDateToQuery = new Date(endDate)
 
-      const records = await BodydataRecord.findAll({
+      const queryOptions = {
         where: {
-          userId,
-          date: {
-            [Op.gte]: startDateToQuery,
-            [Op.lte]: endDateToQuery
-          }
+          userId
         },
-        order: [['date', 'ASC']],
+        attributes: [
+          'id',
+          'height',
+          'weight',
+          'skeletalMuscle',
+          'bodyFat',
+          'visceralFatLevel',
+          'date'
+        ],
+        order: [['date', 'DESC']],
         raw: true
-      })
+      }
+
+      if (endDate) {
+        queryOptions.where.date = {
+          [Op.gte]: startDateToQuery,
+          [Op.lte]: endDateToQuery
+        }
+      }
+
+      if (limit > 0) {
+        queryOptions.limit = limit
+      }
+
+      if (offset) {
+        queryOptions.offset = offset
+      }
+
+      const records = await BodydataRecord.findAndCountAll(queryOptions)
 
       return records
     } catch (error) {
@@ -34,7 +56,17 @@ const bodydataRecordServices = {
 
   getRecordById: async (recordId) => {
     try {
-      const record = await BodydataRecord.findByPk(recordId, { raw: true })
+      const record = await BodydataRecord.findByPk(recordId, {
+        attributes: [
+          'height',
+          'weight',
+          'skeletalMuscle',
+          'bodyFat',
+          'visceralFatLevel',
+          'date'
+        ],
+        raw: true
+      })
 
       return record
     } catch (error) {
