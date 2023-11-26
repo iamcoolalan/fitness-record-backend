@@ -196,7 +196,7 @@ const createAndEditBodydataRecordValidation = (req, res, next) => {
   ]
   const inputValue = req.body
 
-  if (Object.keys(inputValue.newData).length === 0) {
+  if (Object.keys(inputValue.bodydata).length === 0) {
     throw new CustomError('輸入欄位錯誤', {
       statusCode: 400,
       type: 'Validate Error',

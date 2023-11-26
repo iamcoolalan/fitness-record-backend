@@ -100,11 +100,11 @@ const bodydataRecordServices = {
     }
   },
 
-  createNewRecord: async (userId, date, newData) => {
+  createNewRecord: async (userId, date, bodydata) => {
     const dataToAdd = {
       userId,
       date,
-      ...newData
+      ...bodydata
     }
 
     try {
@@ -131,7 +131,11 @@ const bodydataRecordServices = {
         throw new Error(`can not find this record with id: ${recordId}`)
       }
 
-      const updatedRecord = await record.update(updateData)
+      const dataToUpdate = {
+        date: updateData.date,
+        ...updateData.bodydata
+      }
+      const updatedRecord = await record.update(dataToUpdate)
 
       return updatedRecord
     } catch (error) {

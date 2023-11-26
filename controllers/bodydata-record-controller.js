@@ -57,10 +57,10 @@ const bodydataRecordController = {
 
   postRecord: async (req, res, next) => {
     const userId = req.user.id
-    const { date, newData } = req.body
+    const { date, bodydata } = req.body
 
     try {
-      const newRecord = await bodydataRecordServices.createNewRecord(userId, date, newData)
+      const newRecord = await bodydataRecordServices.createNewRecord(userId, date, bodydata)
 
       return res.json({
         status: 'success',
