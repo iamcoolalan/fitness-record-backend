@@ -1,9 +1,20 @@
 const { Op } = require('sequelize')
-const { sequelize, WorkoutRecord, WorkoutDetail, WorkoutCategory } = require('../models')
+const {
+  sequelize,
+  WorkoutRecord,
+  WorkoutDetail,
+  WorkoutCategory
+} = require('../models')
 const { CustomError } = require('../helpers/error-handler-helpers')
 
 const workoutRecordServices = {
-  getRecordsByRange: async (userId, limit, offset, endDate, startDate = endDate) => {
+  getRecordsByRange: async (
+    userId,
+    limit,
+    offset,
+    endDate,
+    startDate = endDate
+  ) => {
     try {
       const endDateToQuery = new Date(endDate)
       const startDateToQuery = new Date(startDate)
@@ -44,15 +55,27 @@ const workoutRecordServices = {
   getRecordDetail: async (workoutRecordId) => {
     try {
       const record = await WorkoutRecord.findByPk(workoutRecordId, {
-        include: [{
-          model: WorkoutDetail,
-          attributes: ['id', 'workoutCategoryId', 'totalSets', 'repetitions', 'weight'],
-          include: {
-            model: WorkoutCategory,
-            attributes: ['name', 'path']
+        include: [
+          {
+            model: WorkoutDetail,
+            attributes: [
+              'id',
+              'workoutCategoryId',
+              'totalSets',
+              'repetitions',
+              'weight'
+            ],
+            include: {
+              model: WorkoutCategory,
+              attributes: ['name', 'path']
+            }
           }
-        }]
+        ]
       })
+
+      if (!record) {
+        throw new Error(`Can not find this record with id: ${workoutRecordId}`)
+      }
 
       return record
     } catch (error) {
@@ -104,7 +127,7 @@ const workoutRecordServices = {
 
         return updatedRecord
       } else {
-        throw new Error('Can not find this record')
+        throw new Error(`Can not find this record with id: ${workoutRecordId}`)
       }
     } catch (error) {
       throw new CustomError('Failed to update record', {
@@ -127,7 +150,7 @@ const workoutRecordServices = {
 
         return deletedRecord
       } else {
-        throw new Error('Can not find this record')
+        throw new Error(`Can not find this record with id: ${workoutRecordId}`)
       }
     } catch (error) {
       throw new CustomError('Failed to delete record', {
@@ -147,7 +170,7 @@ const workoutRecordServices = {
       })
 
       if (record) {
-        const data = workoutDetails.map(detail => ({
+        const data = workoutDetails.map((detail) => ({
           ...detail,
           workoutRecordId: record.id
         }))
@@ -172,13 +195,25 @@ const workoutRecordServices = {
     const transaction = await sequelize.transaction()
 
     try {
+      const record = await WorkoutRecord.findByPk(workoutRecordId, {
+        attributes: ['id'],
+        raw: true
+      })
+
+      if (!record) {
+        throw new Error(`Can not find this record with id: ${workoutRecordId}`)
+      }
+
       for (const updateDetail of updateWorkoutDetails) {
-        await WorkoutDetail.upsert({
-          ...updateDetail,
-          workoutRecordId
-        }, {
-          transaction
-        })
+        await WorkoutDetail.upsert(
+          {
+            ...updateDetail,
+            workoutRecordId
+          },
+          {
+            transaction
+          }
+        )
       }
 
       await transaction.commit()
@@ -198,6 +233,15 @@ const workoutRecordServices = {
     const transaction = await sequelize.transaction()
 
     try {
+      const record = await WorkoutRecord.findByPk(workoutRecordId, {
+        attributes: ['id'],
+        raw: true
+      })
+
+      if (!record) {
+        throw new Error(`Can not find this record with id: ${workoutRecordId}`)
+      }
+
       for (const deleteDetail of deleteWorkoutDetails) {
         const affectedRows = await WorkoutDetail.destroy({
           where: {
@@ -208,7 +252,9 @@ const workoutRecordServices = {
         })
 
         if (affectedRows === 0) {
-          throw new Error(`Can not find this detail with id:${deleteDetail.id}`)
+          throw new Error(
+            `Can not find this detail with id:${deleteDetail.id}`
+          )
         }
       }
 

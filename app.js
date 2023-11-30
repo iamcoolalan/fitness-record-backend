@@ -16,7 +16,7 @@ const app = express()
 const port = process.env.PORT || 3000
 
 const corsOptions = {
-  origin: 'http://localhost:3000',
+  origin: 'https://iamcoolalan.github.io',
   optionsSuccessStatus: 200
 }
 
@@ -35,5 +35,5 @@ app.use(express.json())
 app.use('/api', routes)
 
 app.listen(port, () => {
-  console.log(`App is running on http://localhost:${port}`)
+  console.log(`App is running on https://www.fitness-record.com:${port}`)
 })

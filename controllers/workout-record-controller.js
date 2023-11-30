@@ -60,6 +60,10 @@ const workoutRecordController = {
     const userId = req.user.id
 
     try {
+      if (!date) {
+        throw new Error('Do not have valid value for date!')
+      }
+
       const newRecord = await workoutRecordServices.createNewRecord(userId, date, name, workoutTime)
 
       return res.json({

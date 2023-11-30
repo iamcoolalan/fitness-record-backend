@@ -11,7 +11,11 @@ const bodydataRecordServices = {
 
       const queryOptions = {
         where: {
-          userId
+          userId,
+          date: {
+            [Op.gte]: startDateToQuery,
+            [Op.lte]: endDateToQuery
+          }
         },
         attributes: [
           'id',
@@ -24,13 +28,6 @@ const bodydataRecordServices = {
         ],
         order: [['date', 'DESC']],
         raw: true
-      }
-
-      if (endDate) {
-        queryOptions.where.date = {
-          [Op.gte]: startDateToQuery,
-          [Op.lte]: endDateToQuery
-        }
       }
 
       if (limit > 0) {
@@ -67,6 +64,10 @@ const bodydataRecordServices = {
         ],
         raw: true
       })
+
+      if (!record) {
+        throw new Error(`Can not find this record with id: ${recordId}`)
+      }
 
       return record
     } catch (error) {
