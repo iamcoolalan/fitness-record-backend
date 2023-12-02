@@ -1,29 +1,29 @@
 const express = require('express')
+const marked = require('marked')
 
-const loginSystemController = require('../controllers/login-system-controller')
+const fs = require('fs')
 
-const { loginAuth, permissionAuth } = require('../middlewares/auth')
-const { loginValidation, targetValidation, infoValidation } = require('../middlewares/validation')
 const { errorHandler } = require('../middlewares/error-handler')
 const { CustomError } = require('../helpers/error-handler-helpers')
 
-const bodydataRecord = require('./modules/bodydata-record')
-const workoutRecord = require('./modules/workout-record')
-const user = require('./modules/user')
+const api = require('./api')
 
 const router = express.Router()
 
-router.use('/bodydata-record', permissionAuth, bodydataRecord)
-router.use('/workout-record', permissionAuth, workoutRecord)
-router.use('/user', permissionAuth, user)
+router.use('/api', api)
 
-router.get('/check-token', permissionAuth, loginSystemController.checkToken)
+router.get('/', (req, res, next) => {
+  fs.readFile('README.md', 'utf8', (err, data) => {
+    if (err) {
+      next(err)
+    }
 
-router.post('/login', loginValidation, loginAuth, loginSystemController.login)
-router.post('/signup', infoValidation, targetValidation, loginSystemController.signup)
+    res.send(marked.parse(data))
+  })
+})
 
 router.use((req, res, next) => {
-  const newError = new CustomError('Sorry, we cannot find that!', {
+  const newError = new CustomError('Sorry, we can not find that! More information https://documenter.getpostman.com/view/29142842/2s9YeHbrPd', {
     statusCode: 404,
     type: 'Not Found Error',
     from: 'Server',

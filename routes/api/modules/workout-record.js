@@ -1,9 +1,9 @@
 const express = require('express')
 const router = express.Router()
 
-const workoutRecordController = require('../../controllers/workout-record-controller')
+const workoutRecordController = require('../../../controllers/workout-record-controller')
 
-const { createWorkoutRecordValidation, editWorkoutRecordValidation } = require('../../middlewares/validation')
+const { createWorkoutRecordValidation, editWorkoutRecordValidation } = require('../../../middlewares/validation')
 
 router.get('/category', workoutRecordController.getRecordCategories)
 router.get('/:workoutRecordId', workoutRecordController.getRecord)

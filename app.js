@@ -5,7 +5,6 @@ if (process.env.NODE_ENV !== 'production') {
 const path = require('path')
 
 const express = require('express')
-const methodOverride = require('method-override')
 const session = require('express-session')
 const cors = require('cors')
 
@@ -21,7 +20,6 @@ const corsOptions = {
 }
 
 app.use(cors(corsOptions))
-app.use(methodOverride('_method'))
 app.use(express.urlencoded({ extended: true }))
 app.use(express.static(path.join(__dirname, 'public')))
 app.use(session({
@@ -32,8 +30,12 @@ app.use(session({
 app.use(passport.initialize())
 app.use(passport.session())
 app.use(express.json())
-app.use('/api', routes)
+app.use(routes)
 
 app.listen(port, () => {
-  console.log(`App is running on https://www.fitness-record.com:${port}`)
+  if (process.env.NODE_ENV === 'production') {
+    console.log(`App is running on https://www.fitness-record.com:${port}`)
+  } else {
+    console.log(`App is running on http://localhost:${port}`)
+  }
 })
