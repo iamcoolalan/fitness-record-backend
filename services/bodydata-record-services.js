@@ -11,11 +11,7 @@ const bodydataRecordServices = {
 
       const queryOptions = {
         where: {
-          userId,
-          date: {
-            [Op.gte]: startDateToQuery,
-            [Op.lte]: endDateToQuery
-          }
+          userId
         },
         attributes: [
           'id',
@@ -28,6 +24,13 @@ const bodydataRecordServices = {
         ],
         order: [['date', 'DESC']],
         raw: true
+      }
+
+      if (endDate) {
+        queryOptions.where.date = {
+          [Op.gte]: startDateToQuery,
+          [Op.lte]: endDateToQuery
+        }
       }
 
       if (limit > 0) {

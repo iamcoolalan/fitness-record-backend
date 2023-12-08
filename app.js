@@ -15,7 +15,7 @@ const app = express()
 const port = process.env.PORT || 3000
 
 const corsOptions = {
-  origin: 'https://iamcoolalan.github.io',
+  origin: '*',
   optionsSuccessStatus: 200
 }
 

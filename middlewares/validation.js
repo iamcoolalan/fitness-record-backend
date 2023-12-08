@@ -1,7 +1,7 @@
 const { CustomError } = require('../helpers/error-handler-helpers')
 
 function isInputEmpty (input) {
-  return input.trim().length === 0
+  return input === null || input?.trim().length === 0
 }
 
 function isInvalidLength (input, maxLength) {
@@ -13,7 +13,7 @@ function checkIfFieldsAreNumbers (fields, inputValue) {
 
   fields.forEach(field => {
     if (inputValue[field.name] && typeof inputValue[field.name] !== 'number') {
-      errors.push({ message: `${field.label}欄位只能輸入數字` })
+      errors.push(`${field.label}欄位只能輸入數字`)
     }
   })
 
@@ -59,43 +59,29 @@ const infoValidation = (req, res, next) => {
   const emailRegex = /^\w+((-|\.)\w+)*@[A-Za-z0-9]+((-|\.)[A-Za-z0-9]+)*\.[A-Za-z]+$/
 
   if (isInputEmpty(name)) {
-    errors.push({
-      message: '名稱不得空白'
-    })
+    errors.push('名稱不得空白')
   } else if (isInvalidLength(name, MAX_NAME_LENGTH)) {
-    errors.push({
-      message: `暱稱不得超過${MAX_NAME_LENGTH}字`
-    })
+    errors.push(`暱稱不得超過${MAX_NAME_LENGTH}字`)
   }
 
   if (isInputEmpty(email)) {
-    errors.push({
-      message: 'Email不得空白'
-    })
+    errors.push('Email不得空白')
   } else if (!emailRegex.test(email)) {
-    errors.push({
-      message: 'Email格式不正確'
-    })
+    errors.push('Email格式不正確')
   }
 
   if (isRegister) {
     if (isInputEmpty(password)) {
-      errors.push({
-        message: '密碼不得空白'
-      })
+      errors.push('密碼不得空白')
     }
 
     if (isInputEmpty(passwordCheck)) {
-      errors.push({
-        message: '請再次瑱入密碼'
-      })
+      errors.push('請再次瑱入密碼')
     }
   }
 
   if (password !== passwordCheck) {
-    errors.push({
-      message: '密碼與確認密碼不相符'
-    })
+    errors.push('密碼與確認密碼不相符')
   }
 
   if (errors.length > 0) {
@@ -103,7 +89,7 @@ const infoValidation = (req, res, next) => {
       statusCode: 400,
       type: 'Validate Error',
       from: 'Info Validation',
-      detail: errors
+      detail: errors.join(', ')
     })
   }
 
@@ -127,7 +113,7 @@ const targetValidation = (req, res, next) => {
       statusCode: 400,
       type: 'Validate Error',
       from: 'Target Validation',
-      detail: errors
+      detail: errors.join(', ')
     })
   }
 
@@ -165,13 +151,13 @@ const editWorkoutRecordValidation = (req, res, next) => {
   const errors = []
 
   if (isInputEmpty(name)) {
-    errors.push({ message: '名稱不得空白' })
+    errors.push('名稱不得空白')
   } else if (isInvalidLength(name, MAX_NAME_LENGTH)) {
-    errors.push({ message: `名稱不得超過${MAX_NAME_LENGTH}字` })
+    errors.push(`名稱不得超過${MAX_NAME_LENGTH}字`)
   }
 
   if (isInputEmpty(date)) {
-    errors.push({ message: '日期不得空白' })
+    errors.push('日期不得空白')
   }
 
   if (errors.length > 0) {
@@ -179,7 +165,7 @@ const editWorkoutRecordValidation = (req, res, next) => {
       statusCode: 400,
       type: 'Validate Error',
       from: 'Edit Workout Record Validation',
-      detail: errors
+      detail: errors.join(', ')
     })
   }
 
@@ -212,7 +198,7 @@ const createAndEditBodydataRecordValidation = (req, res, next) => {
       statusCode: 400,
       type: 'Validate Error',
       from: 'Bodydata Record Validation',
-      detail: errors
+      detail: errors.join(', ')
 
     })
   }
