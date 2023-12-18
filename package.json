@@ -6,7 +6,9 @@
   "scripts": {
     "dev": "nodemon app.js",
     "start": "node app.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "undoDB": "npx sequelize db:migrate:undo:all",
+    "migrateDB": "npx sequelize db:migrate && npx sequelize db:seed:all"
   },
   "keywords": [],
   "author": "",
@@ -18,7 +20,7 @@
     "express": "^4.18.2",
     "express-session": "^1.17.3",
     "jsonwebtoken": "^9.0.2",
-    "marked": "^11.0.0",
+    "marked": "^11.1.0",
     "mysql2": "^3.6.1",
     "passport": "^0.6.0",
     "passport-jwt": "^4.0.1",

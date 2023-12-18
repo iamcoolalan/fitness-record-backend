@@ -79,6 +79,12 @@ const userServices = {
         throw new Error(`Can not find this user with id: ${userId}`)
       }
 
+      if (user.email === 'user1@example.com') {
+        if ((updateInfo.email !== user.email) || updateInfo.password) {
+          throw new Error('Can not change test account email or password!')
+        }
+      }
+
       if (updateInfo.email && updateInfo.email !== user.email) {
         const checkUserExist = await userServices.doesUserExist(updateInfo.email)
 
