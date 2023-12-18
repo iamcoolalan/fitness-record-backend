@@ -118,12 +118,10 @@
       npx sequelize db:seed:all
       ```
 
-    ##### *預設有提供三組使用者可以做測試
+    ##### *預設提供一組使用者可以做測試
     | 使用者名稱 | email | 密碼 |
     | :---: | :---: | :---: |
     | user1 | user1@example.com | 123456789 |
-    | user2 | user2@example.com | 123456789 |
-    | user3 | user3@example.com | 123456789 |
 
 7. 在終端機中輸入以下指令啟動程式
 
