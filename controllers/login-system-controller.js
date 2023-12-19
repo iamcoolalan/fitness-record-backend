@@ -10,7 +10,7 @@ const loginSystemController = {
       const user = { id: req.user.id }
 
       const key = process.env.JWT_SECRET
-      const token = jwt.sign(user, key, { expiresIn: '30d' })
+      const token = jwt.sign(user, key, { expiresIn: '1h' })
 
       return res.json({
         status: 'success',
