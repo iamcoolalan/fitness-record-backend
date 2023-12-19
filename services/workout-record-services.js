@@ -39,9 +39,22 @@ const workoutRecordServices = {
         queryOptions.offset = offset
       }
 
+      const totalTrainingVolume = await WorkoutRecord.sum('trainingVolume', {
+        where: {
+          userId,
+          date: {
+            [Op.gte]: startDateToQuery,
+            [Op.lte]: endDateToQuery
+          }
+        }
+      })
+
       const records = await WorkoutRecord.findAndCountAll(queryOptions)
 
-      return records
+      return {
+        totalTrainingVolume,
+        ...records
+      }
     } catch (error) {
       throw new CustomError('Failed to find records', {
         statusCode: 500,
@@ -88,12 +101,13 @@ const workoutRecordServices = {
     }
   },
 
-  createNewRecord: async (userId, date, name, workoutTime) => {
+  createNewRecord: async (userId, date, name, workoutTime, trainingVolume) => {
     try {
       const record = await WorkoutRecord.create({
         userId,
         date,
         workoutTime,
+        trainingVolume,
         name: name || undefined
       })
 

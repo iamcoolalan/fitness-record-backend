@@ -25,6 +25,10 @@ module.exports = {
         defaultValue: 0,
         type: Sequelize.INTEGER
       },
+      training_volume: {
+        defaultValue: 0,
+        type: Sequelize.INTEGER
+      },
       date: {
         allowNull: false,
         type: Sequelize.DATEONLY

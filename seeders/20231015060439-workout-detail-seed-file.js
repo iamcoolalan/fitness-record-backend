@@ -1,6 +1,8 @@
 'use strict'
 
 /** @type {import('sequelize-cli').Migration} */
+const { WorkoutRecord } = require('../models')
+
 const DEFAULT_SET = 4
 const DEFAULT_REPETITIONS = 10
 const DEFAULT_MOVEMENT_PER_DAY = 6
@@ -28,6 +30,16 @@ function getRandomCategoryAndRemoveIt (array) {
   return randomCategory
 }
 
+function countTotalTrainingVolume (recordList) {
+  let totalWorkoutVolume = 0
+
+  recordList.forEach(workout => {
+    totalWorkoutVolume = totalWorkoutVolume + Number(workout.total_sets) * Number(workout.repetitions) * Number(workout.weight)
+  })
+
+  return totalWorkoutVolume
+}
+
 module.exports = {
   async up (queryInterface, Sequelize) {
     const workoutRecords = await queryInterface.sequelize.query(
@@ -40,6 +52,7 @@ module.exports = {
     )
 
     const allRecords = []
+    const allRecordsTrainingVolume = []
 
     for (const record of workoutRecords) {
       const copyWorkoutCategories = workoutCategories.slice()
@@ -56,11 +69,25 @@ module.exports = {
         }
       })
 
+      const trainingVolume = countTotalTrainingVolume(recordOfTheWorkout)
+
       allRecords.push(...recordOfTheWorkout)
+      allRecordsTrainingVolume.push({
+        id: record.id,
+        trainingVolume
+      })
     }
 
     try {
       await queryInterface.bulkInsert('Workout_Details', allRecords)
+
+      for (const record of allRecordsTrainingVolume) {
+        await WorkoutRecord.update({
+          trainingVolume: record.trainingVolume
+        }, {
+          where: { id: record.id }
+        })
+      }
     } catch (error) {
       console.log('[Insert Workout Details seed data failed] :', error)
     }

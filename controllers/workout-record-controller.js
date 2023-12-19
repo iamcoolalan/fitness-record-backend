@@ -56,7 +56,7 @@ const workoutRecordController = {
   },
 
   postRecord: async (req, res, next) => {
-    const { name, date, workoutTime } = req.body
+    const { name, date, workoutTime, trainingVolume } = req.body
     const userId = req.user.id
 
     try {
@@ -64,7 +64,7 @@ const workoutRecordController = {
         throw new Error('Do not have valid value for date!')
       }
 
-      const newRecord = await workoutRecordServices.createNewRecord(userId, date, name, workoutTime)
+      const newRecord = await workoutRecordServices.createNewRecord(userId, date, name, workoutTime, trainingVolume)
 
       return res.json({
         status: 'success',

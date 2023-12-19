@@ -21,6 +21,7 @@ module.exports = (sequelize, DataTypes) => {
     name: DataTypes.STRING,
     isDone: DataTypes.BOOLEAN,
     workoutTime: DataTypes.INTEGER,
+    trainingVolume: DataTypes.INTEGER,
     date: DataTypes.DATEONLY
   }, {
     sequelize,
